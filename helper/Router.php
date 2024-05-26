@@ -1,4 +1,5 @@
 <?php
+
 class Router
 {
     private $defaultController;
@@ -10,10 +11,10 @@ class Router
         $this->defaultMethod = $defaultMethod;
     }
 
-    public function route($controllerName, $methodName)
+    public function route($module, $httpMethod)
     {
-        $controller = $this->getControllerFrom($controllerName);
-        $this->executeMethodFromController($controller, $methodName);
+        $controller = $this->getControllerFrom($module);
+        $this->executeMethodFromController($controller, $httpMethod);
     }
 
     private function getControllerFrom($module)
@@ -23,9 +24,9 @@ class Router
         return call_user_func(array("Configuration", $validController));
     }
 
-    private function executeMethodFromController($controller, $method)
+    private function executeMethodFromController($controller, $httpMethod)
     {
-        $validMethod = method_exists($controller, $method) ? $method : $this->defaultMethod;
+        $validMethod = method_exists($controller, $httpMethod) ? $httpMethod : $this->defaultMethod;
         call_user_func(array($controller, $validMethod));
     }
 }

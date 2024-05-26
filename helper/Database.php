@@ -1,4 +1,5 @@
 <?php
+
 class Database
 {
     private $conn;
@@ -12,7 +13,8 @@ class Database
         }
     }
 
-    public function query($sql){
+    public function query($sql)
+    {
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
@@ -20,6 +22,11 @@ class Database
     public function execute($sql)
     {
         mysqli_query($this->conn, $sql);
+    }
+
+    public function prepare($sql)
+    {
+        return mysqli_prepare($this->conn, $sql);
     }
 
     public function __destruct()
