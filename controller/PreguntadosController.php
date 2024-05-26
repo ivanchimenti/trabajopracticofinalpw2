@@ -1,4 +1,5 @@
 <?php
+
 class PreguntadosController
 {
     private $presenter;
@@ -10,6 +11,6 @@ class PreguntadosController
 
     public function get()
     {
-        $this->presenter->render("view/labandaView.mustache");
+        $this->presenter->render("view/loginView.mustache");
     }
 }

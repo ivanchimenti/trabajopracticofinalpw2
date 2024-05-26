@@ -16,8 +16,11 @@ class LoginController
         $this->presenter->render("view/loginView.mustache");
     }
 
-    public function post($username, $password)
+    public function post()
     {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
         if ($this->authenticate($username, $password)) {
             $this->presenter->render("view/dashboardView.mustache");
         } else {
