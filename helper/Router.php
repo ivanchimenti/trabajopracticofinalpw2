@@ -1,5 +1,6 @@
 <?php
 
+
 class Router
 {
     private $defaultController;
@@ -13,6 +14,12 @@ class Router
 
     public function route($module, $httpMethod)
     {
+        if ($httpMethod === 'get' && isset($_GET['action']) && $_GET['action'] === 'activate') {
+            $controller = $this->getControllerFrom('user');
+            $controller->activate();
+            return;
+        }
+
         $controller = $this->getControllerFrom($module);
         $this->executeMethodFromController($controller, $httpMethod);
     }

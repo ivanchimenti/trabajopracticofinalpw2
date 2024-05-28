@@ -34,7 +34,7 @@ class UserController
 
         if ($action === 'login') {
             if ($this->model->login($username, $password)) {
-                $this->presenter->render("view/dashboardView.mustache", $data);
+                $this->presenter->render("view/homeView.mustache", $data);
             } else {
                 $data['error'] = 'Usuario o contraseña incorrectos';
                 $this->presenter->render("view/loginView.mustache", $data);
