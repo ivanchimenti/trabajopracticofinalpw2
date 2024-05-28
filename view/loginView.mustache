@@ -15,7 +15,7 @@
         {{#success}}
         <div class="success-message">{{success}}</div>
         {{/success}}
-        <form action="/user/post" method="post">
+        <form action="/user/login" method="post">
             <input type="hidden" name="action" value="login">
             <div class="form-group">
                 <label for="username">Usuario:</label>
@@ -31,7 +31,7 @@
 
     <div class="register-container">
         <h2>Register</h2>
-        <form action="/user/post" method="post">
+        <form action="/user/register" method="post">
             <input type="hidden" name="action" value="register">
             <div class="form-group">
                 <label for="username">Usuario:</label>
@@ -44,6 +44,6 @@
             <button type="submit">Register</button>
         </form>
     </div>
-    <h2> para activar la cuenta usar un link http://localhost/user?action=activate&token=TOKEN </h2>
+    <h2> para activar la cuenta usar un link http://localhost/user/activate/token=TOKEN </h2>
 </body>
 </html>

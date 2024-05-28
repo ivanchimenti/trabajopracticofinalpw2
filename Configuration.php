@@ -25,13 +25,13 @@ class Configuration
         return new UserController(self::getPresenter(), self::getDatabase(), self::getUserModel());
     }
 
-    public static function getDatabase()
+    private static function getDatabase()
     {
         $config = self::getConfig();
         return new Database($config["servername"], $config["username"], $config["password"], $config["dbname"]);
     }
 
-    public static function getUserModel()
+    private static function getUserModel()
     {
         return new UserModel(self::getDatabase());
     }
@@ -41,7 +41,7 @@ class Configuration
         return parse_ini_file("config/config.ini");
     }
 
-    public static function getRouter()
+    private static function getRouter()
     {
         return new Router("getUserController", "get");
     }

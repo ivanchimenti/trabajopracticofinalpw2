@@ -19,31 +19,29 @@ class UserController
         $this->presenter->render("view/loginView.mustache", $data);
     }
 
-    public function post()
+    public function login()
     {
-        if (!isset($_POST['action'])) {
-            $data = ['error' => 'Invalid request.'];
-            $this->presenter->render("view/loginView.mustache", $data);
-            return;
-        }
-
-        $action = $_POST['action'];
         $username = $_POST['username'];
         $password = $_POST['password'];
         $data = [];
 
-        if ($action === 'login') {
-            if ($this->model->login($username, $password)) {
-                $this->presenter->render("view/homeView.mustache", $data);
-            } else {
-                $data['error'] = 'Usuario o contraseña incorrectos';
-                $this->presenter->render("view/loginView.mustache", $data);
-            }
-        } elseif ($action === 'register') {
-            $this->model->register($username, $password);
-            $data['success'] = 'Usuario registrado exitosamente. Por favor, verifica tu correo electrónico para activar tu cuenta.';
+        if ($this->model->login($username, $password)) {
+            $this->presenter->render("view/homeView.mustache", $data);
+        } else {
+            $data['error'] = 'Usuario o contraseña incorrectos';
             $this->presenter->render("view/loginView.mustache", $data);
         }
+    }
+
+    public function register()
+    {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $data = [];
+
+        $this->model->register($username, $password);
+        $data['success'] = 'Usuario registrado exitosamente. Por favor, verifica tu correo electrónico para activar tu cuenta.';
+        $this->presenter->render("view/loginView.mustache", $data);
     }
 
     public function activate()
@@ -63,5 +61,6 @@ class UserController
             $data['error'] = 'Token de activación inválido o la cuenta ya ha sido activada.';
         }
         $this->presenter->render("view/loginView.mustache", $data);
+
     }
 }
