@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
+    <link rel="stylesheet" href="">
 </head>
 <body>
     <div class="login-container">
@@ -12,7 +12,11 @@
         {{#error}}
         <div class="error-message">{{error}}</div>
         {{/error}}
-        <form action="/login" method="post">
+        {{#success}}
+        <div class="success-message">{{success}}</div>
+        {{/success}}
+        <form action="/user/post" method="post">
+            <input type="hidden" name="action" value="login">
             <div class="form-group">
                 <label for="username">Usuario:</label>
                 <input type="text" id="username" name="username" required>
@@ -22,6 +26,22 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="/user/post" method="post">
+            <input type="hidden" name="action" value="register">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Register</button>
         </form>
     </div>
 </body>
