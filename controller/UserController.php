@@ -33,7 +33,7 @@ class UserController
         $data = [];
 
         if ($action === 'login') {
-            if ($this->model->authenticate($username, $password)) {
+            if ($this->model->login($username, $password)) {
                 $this->presenter->render("view/dashboardView.mustache", $data);
             } else {
                 $data['error'] = 'Usuario o contraseña incorrectos';
@@ -41,8 +41,27 @@ class UserController
             }
         } elseif ($action === 'register') {
             $this->model->register($username, $password);
-            $data['success'] = 'Usuario registrado exitosamente.';
+            $data['success'] = 'Usuario registrado exitosamente. Por favor, verifica tu correo electrónico para activar tu cuenta.';
             $this->presenter->render("view/loginView.mustache", $data);
         }
+    }
+
+    public function activate()
+    {
+        if (!isset($_GET['token'])) {
+            $data = ['error' => 'Token de activación no proporcionado.'];
+            $this->presenter->render("view/loginView.mustache", $data);
+            return;
+        }
+
+        $authToken = $_GET['token'];
+        $data = [];
+
+        if ($this->model->activateAccount($authToken)) {
+            $data['success'] = 'Cuenta activada exitosamente.';
+        } else {
+            $data['error'] = 'Token de activación inválido o la cuenta ya ha sido activada.';
+        }
+        $this->presenter->render("view/loginView.mustache", $data);
     }
 }

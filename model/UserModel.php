@@ -9,9 +9,9 @@ class UserModel
         $this->database = $database;
     }
 
-    public function authenticate($username, $password)
+    public function login($username, $password)
     {
-        $query = $this->database->prepare("SELECT password FROM users WHERE username = ?");
+        $query = $this->database->prepare("SELECT password, authToken FROM users WHERE username = ?");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -19,12 +19,19 @@ class UserModel
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $hashedPassword = $row['password'];
+            $authToken = $row['authToken'];
+
+            if ($authToken != "") {
+                return false;
+            }
+
             if (password_verify($password, $hashedPassword)) {
                 return true;
             }
         }
         return false;
     }
+
 
     public function register($username, $password)
     {
@@ -33,6 +40,15 @@ class UserModel
         $query = $this->database->prepare("INSERT INTO users (username, password, authToken) VALUES (?, ?, ?)");
         $query->bind_param("sss", $username, $hashedPassword, $authToken);
         $query->execute();
+    }
+
+    public function activateAccount($authToken)
+    {
+        $query = $this->database->prepare("UPDATE users SET authToken = NULL WHERE authToken = ?");
+        $query->bind_param("s", $authToken);
+        $query->execute();
+
+        return $query->affected_rows > 0;
     }
 
     public function generateAuthToken()
