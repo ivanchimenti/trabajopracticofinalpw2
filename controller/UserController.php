@@ -1,14 +1,16 @@
 <?php
 
-class LoginController
+class UserController
 {
     private $presenter;
     private $database;
+    private $model;
 
-    public function __construct($presenter, $database)
+    public function __construct($presenter, $database, $model)
     {
         $this->presenter = $presenter;
         $this->database = $database;
+        $this->model = $model;
     }
 
     public function get()
@@ -21,23 +23,10 @@ class LoginController
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if ($this->authenticate($username, $password)) {
+        if ($this->model->authenticate($username, $password)) {
             $this->presenter->render("view/dashboardView.mustache");
         } else {
             $this->presenter->render("view/loginView.mustache", ['error' => 'Usuario o contraseña incorrectos']);
         }
-    }
-
-    private function authenticate($username, $password)
-    {
-        $query = $this->database->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-        $query->bind_param("ss", $username, $password);
-        $query->execute();
-        $result = $query->get_result();
-
-        if ($result->num_rows > 0) {
-            return true;
-        }
-        return false;
     }
 }

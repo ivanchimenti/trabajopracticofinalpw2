@@ -1,7 +1,9 @@
 <?php
 
 include_once("controller/PreguntadosController.php");
-include_once("controller/LoginController.php");
+include_once("controller/UserController.php");
+
+include_once("model/UserModel.php");
 
 include_once("helper/Database.php");
 include_once("helper/Router.php");
@@ -18,15 +20,20 @@ class Configuration
         return new PreguntadosController(self::getPresenter());
     }
 
-    public static function getLoginController()
+    public static function getUserController()
     {
-        return new LoginController(self::getPresenter(), self::getDatabase());
+        return new UserController(self::getPresenter(), self::getDatabase(), self::getUserModel());
     }
 
     public static function getDatabase()
     {
         $config = self::getConfig();
         return new Database($config["servername"], $config["username"], $config["password"], $config["dbname"]);
+    }
+
+    public static function getUserModel()
+    {
+        return new UserModel(self::getDatabase());
     }
 
     private static function getConfig()
@@ -36,7 +43,7 @@ class Configuration
 
     public static function getRouter()
     {
-        return new Router("getLoginController", "get");
+        return new Router("getUserController", "get");
     }
 
     private static function getPresenter()
