@@ -26,11 +26,26 @@ class UserController
         $data = [];
 
         if ($this->model->login($username, $password)) {
-            $this->presenter->render("view/homeView.mustache", $data);
+            $_SESSION['username'] = $username;
+            header('Location: /user/home');
+            exit();
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';
             $this->presenter->render("view/loginView.mustache", $data);
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header('Location: /user');
+        exit();
+    }
+
+    public function home()
+    {
+        $data = [];
+        $this->presenter->render("view/homeView.mustache", $data);
     }
 
     public function register()

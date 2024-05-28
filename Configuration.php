@@ -7,6 +7,7 @@ include_once("model/UserModel.php");
 
 include_once("helper/Database.php");
 include_once("helper/Router.php");
+include_once("helper/Validations.php");
 
 include_once("helper/Presenter.php");
 include_once("helper/MustachePresenter.php");
@@ -41,7 +42,7 @@ class Configuration
         return parse_ini_file("config/config.ini");
     }
 
-    private static function getRouter()
+    public static function getRouter()
     {
         return new Router("getUserController", "get");
     }
