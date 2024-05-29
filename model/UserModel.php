@@ -44,7 +44,7 @@ class UserModel
 
     public function activateAccount($authToken)
     {
-        $query = $this->database->prepare("UPDATE users SET authToken = NULL WHERE authToken = ?");
+        $query = $this->database->prepare("UPDATE users SET authToken = '' WHERE authToken = ?");
         $query->bind_param("s", $authToken);
         $query->execute();
 
