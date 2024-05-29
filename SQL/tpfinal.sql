@@ -36,33 +36,21 @@ CREATE TABLE `respuesta` (
 ALTER TABLE `users`
   ADD PRIMARY KEY (`username`);
 
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+create table Pregunta(
+                         id INT auto_increment,
+                         categoria INT NOT NULL,
+                         contenido TEXT NOT NULL,
+                         primary key(id)
+);
 
-ALTER TABLE `pregunta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_categoria` (`id_categoria`);
+create table Respuesta(
+                          id INT auto_increment,
+                          idPregunta INT NOT NULL,
+                          contenido TEXT NOT NULL,
+                          correcta tinyint not null,
+                          primary key(id),
+                          foreign key(idPregunta) references Pregunta(id)
+);
 
-  ALTER TABLE `respuesta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pregunta` (`id_pregunta`);
-
-  ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-  ALTER TABLE `pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-  ALTER TABLE `respuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-  ALTER TABLE `pregunta`
-  ADD CONSTRAINT `pregunta_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
-
-  ALTER TABLE `respuesta`
-  ADD CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id`);
-COMMIT;
-
-
-
+INSERT INTO Pregunta(categoria,contenido) VALUES (1,'de que color era el caballo blanco de san martin?'),(2,'cuantos balones de oro tiene Messi?'),(3,'quien fue el director de la pelicula "el resplandor"?');
+INSERT INTO Respuesta(idPregunta,contenido,correcta) VALUES (1,'marron',0),(1,'blanco',1),(1,'verde',0),(1,'negro',0),(2,'3',0),(2,'6',0),(2,'4',0),(2,'8',1),(3,'Stanley Kubrick',1),(3,'Woody Allen',0),(3,'Christopher Nolan',0),(3,'Ari Aster',0);

@@ -3,13 +3,11 @@
 class UserController
 {
     private $presenter;
-    private $database;
     private $model;
 
-    public function __construct($presenter, $database, $model)
+    public function __construct($presenter, $model)
     {
         $this->presenter = $presenter;
-        $this->database = $database;
         $this->model = $model;
     }
 
@@ -51,7 +49,7 @@ class UserController
     public function home()
     {
         $data = [];
-        $this->presenter->render("view/homeView.mustache", $data);
+        $this->presenter->render("view/lobbyView.mustache", $data);
     }
 
     public function register()
