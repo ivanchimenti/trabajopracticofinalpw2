@@ -15,24 +15,6 @@ CREATE TABLE `users` (
   `profile_picture` varchar(255) NOT NULL
 );
 
-
-CREATE TABLE `categoria` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-)
-
-CREATE TABLE `pregunta` (
-  `id` int(11) NOT NULL,
-  `texto` varchar(255) NOT NULL,
-  `id_categoria` int(11) NOT NULL
-)
-
-CREATE TABLE `respuesta` (
-  `id` int(11) NOT NULL,
-  `texto` varchar(255) DEFAULT NULL,
-  `id_pregunta` int(11) NOT NULL
-)
-
 ALTER TABLE `users`
   ADD PRIMARY KEY (`username`);
 

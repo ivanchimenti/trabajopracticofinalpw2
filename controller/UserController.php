@@ -31,7 +31,7 @@ class UserController
 
         if ($this->model->login($username, $password)) {
             $_SESSION['username'] = $username;
-            header('Location: /user/home');
+            header('Location: /partida/get');
             exit();
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';

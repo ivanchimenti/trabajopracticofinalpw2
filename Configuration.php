@@ -1,6 +1,5 @@
 <?php
 
-include_once("controller/PreguntadosController.php");
 include_once("controller/UserController.php");
 include_once("controller/PartidaController.php");
 
@@ -18,11 +17,6 @@ include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
 class Configuration
 {
-    public static function getPreguntadosController(): PreguntadosController
-    {
-        return new PreguntadosController(self::getPresenter());
-    }
-
     public static function getUserController(): UserController
     {
         return new UserController(self::getPresenter(), self::getUserModel());
