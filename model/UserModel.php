@@ -33,13 +33,11 @@ class UserModel
     }
 
 
-    public function register($username, $password)
+    public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath)
     {
-        $hashedPassword = $this->hashPassword($password);
-        $authToken = $this->generateAuthToken();
-        $query = $this->database->prepare("INSERT INTO users (username, password, authToken) VALUES (?, ?, ?)");
-        $query->bind_param("sss", $username, $hashedPassword, $authToken);
-        $query->execute();
+        $query = $this->database->prepare("INSERT INTO users (username, password, authToken, full_name, birth_year, gender, country, city, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query->bind_param("ssssisssss", $username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath);
+        return $query->execute();
     }
 
     public function activateAccount($authToken)
@@ -51,13 +49,4 @@ class UserModel
         return $query->affected_rows > 0;
     }
 
-    public function generateAuthToken()
-    {
-        return md5(uniqid(rand(), true));
-    }
-
-    public function hashPassword($password)
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
 }
