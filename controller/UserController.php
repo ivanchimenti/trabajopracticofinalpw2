@@ -23,6 +23,49 @@ class UserController
         $this->presenter->render("view/registerView.mustache", $data);
     }
 
+    public function lobby()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: /user');
+            exit();
+        }
+
+        $user = $_SESSION['user'];
+        $data = [
+            'full_name' => $user['full_name'],
+            'birth_year' => $user['birth_year'],
+            'gender' => $user['gender'],
+            'country' => $user['country'],
+            'city' => $user['city'],
+            'email' => $user['email'],
+            'username' => $user['username'],
+            'profile_picture' => $user['profile_picture']
+        ];
+
+        $this->presenter->render("view/lobbyView.mustache", $data);
+    }
+
+    public function profile()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: /user');
+            exit();
+        }
+
+        $user = $_SESSION['user'];
+        $data = [
+            'full_name' => $user['full_name'],
+            'birth_year' => $user['birth_year'],
+            'gender' => $user['gender'],
+            'country' => $user['country'],
+            'city' => $user['city'],
+            'email' => $user['email'],
+            'username' => $user['username'],
+            'profile_picture' => $user['profile_picture']
+        ];
+        $this->presenter->render("view/profileView.mustache", $data);
+    }
+
     public function login()
     {
         $username = $_POST['username'];
@@ -33,24 +76,19 @@ class UserController
 
         if ($user !== null) {
             $_SESSION['user'] = $user;
-            header('Location: /user/home');
+            header('Location: /user/lobby');
             exit();
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';
             $this->presenter->render("view/loginView.mustache", $data);
         }
     }
+
     public function logout()
     {
         session_destroy();
         header('Location: /user');
         exit();
-    }
-
-    public function home()
-    {
-        $data = [];
-        $this->presenter->render("view/lobbyView.mustache", $data);
     }
 
     public function register()
