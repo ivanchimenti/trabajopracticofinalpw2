@@ -9,9 +9,9 @@ class UserModel
         $this->database = $database;
     }
 
-    public function login($username, $password)
+    public function getUser($username, $password)
     {
-        $query = $this->database->prepare("SELECT password, authToken FROM users WHERE username = ?");
+        $query = $this->database->prepare("SELECT * FROM users WHERE username = ?");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -22,14 +22,15 @@ class UserModel
             $authToken = $row['authToken'];
 
             if ($authToken != "") {
-                return false;
+                return null;
             }
 
             if (password_verify($password, $hashedPassword)) {
-                return true;
+                unset($row['password']);
+                return $row;
             }
         }
-        return false;
+        return null;
     }
 
 

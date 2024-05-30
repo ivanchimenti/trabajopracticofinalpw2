@@ -29,8 +29,10 @@ class UserController
         $password = $_POST['password'];
         $data = [];
 
-        if ($this->model->login($username, $password)) {
-            $_SESSION['username'] = $username;
+        $user = $this->model->getUser($username, $password);
+
+        if ($user !== null) {
+            $_SESSION['user'] = $user;
             header('Location: /user/home');
             exit();
         } else {
@@ -38,7 +40,6 @@ class UserController
             $this->presenter->render("view/loginView.mustache", $data);
         }
     }
-
     public function logout()
     {
         session_destroy();
