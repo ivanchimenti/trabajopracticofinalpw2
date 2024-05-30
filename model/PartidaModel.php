@@ -9,8 +9,15 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function getPregunta(){
-        $query =  $this->database->prepare("SELECT * FROM Pregunta ORDER BY RAND() LIMIT 1");
+    public function getPregunta($preguntasMostradas){
+
+        $ids = implode(',', $preguntasMostradas);
+
+        if(empty($ids))
+            $query =  $this->database->prepare("SELECT * FROM Pregunta ORDER BY RAND() LIMIT 1");
+        else
+            $query =  $this->database->prepare("SELECT * FROM Pregunta WHERE id NOT IN ($ids) ORDER BY RAND() LIMIT 1");
+
         $query->execute();
         $result = $query->get_result();
 
