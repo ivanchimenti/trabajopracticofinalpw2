@@ -1,0 +1,31 @@
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    {{#game_over}}
+        <h2 class="w3-wide">Fin del Juego</h2>
+        <h1>Has respondido incorrectamente. ¡Has perdido!</h1>
+        <a href="/partida/reset" class="w3-button w3-light-grey">Volver a Jugar</a>
+    {{/game_over}}
+
+    {{#no_more_questions}}
+        <h2 class="w3-wide">¡Felicitaciones!</h2>
+        <h1>Has respondido todas las preguntas correctamente.</h1>
+        <a href="/partida/reset" class="w3-button w3-light-grey">Volver a Jugar</a>
+    {{/no_more_questions}}
+
+    {{^game_over}}
+        {{^no_more_questions}}
+            <h2 class="w3-wide">Pregunta</h2>
+            <h1>{{ pregunta.contenido }}</h1>
+            <h2>Respuestas:</h2>
+            <form action="/partida/answer" method="post">
+                {{#respuestas}}
+                    <div>
+                        <input type="radio" name="respuesta_id" value="{{id}}" id="respuesta_{{id}}" required>
+                        <label for="respuesta_{{id}}">{{contenido}}</label>
+                    </div>
+                {{/respuestas}}
+                <button type="submit" class="w3-button w3-light-grey">Enviar Respuesta</button>
+            </form>
+        {{/no_more_questions}}
+    {{/game_over}}
+</div>
+

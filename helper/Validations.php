@@ -2,8 +2,18 @@
 
 function validateSession($controller, $action)
 {
-    if($controller == "user" && $action == "home" && !isset($_SESSION['user'])) {
+    if($controller == "user" && $action == "get" && isset($_SESSION['user'])) {
+        header("Location: /user/lobby");
+        exit();
+    }
+
+    if($controller == "user" && $action == "lobby" && !isset($_SESSION['user'])) {
         header("Location: /user");
+        exit();
+    }
+
+    if($controller == "user" && $action == "register" && isset($_SESSION['user'])) {
+        header("Location: /user/lobby");
         exit();
     }
 

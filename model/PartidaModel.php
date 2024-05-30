@@ -9,14 +9,16 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function getPregunta($preguntasMostradas){
+    public function getPregunta($preguntasMostradas)
+    {
 
         $ids = implode(',', $preguntasMostradas);
 
-        if(empty($ids))
+        if(empty($ids)) {
             $query =  $this->database->prepare("SELECT * FROM Pregunta ORDER BY RAND() LIMIT 1");
-        else
+        } else {
             $query =  $this->database->prepare("SELECT * FROM Pregunta WHERE id NOT IN ($ids) ORDER BY RAND() LIMIT 1");
+        }
 
         $query->execute();
         $result = $query->get_result();
@@ -28,7 +30,8 @@ class PartidaModel
         }
     }
 
-    public function getRespuestas($idPregunta){
+    public function getRespuestas($idPregunta)
+    {
         $query =  $this->database->prepare("SELECT * FROM Respuesta WHERE idPregunta = ?");
         $query->bind_param("i", $idPregunta);
         $query->execute();
@@ -45,5 +48,15 @@ class PartidaModel
         } else {
             return null;
         }
+    }
+
+    public function getRespuesta($idRespuesta)
+    {
+        $query = $this->database->prepare("SELECT * FROM Respuesta WHERE id = ?");
+        $query->bind_param("i", $idRespuesta);
+        $query->execute();
+        $result = $query->get_result();
+
+        return $result->num_rows > 0 ? $result->fetch_assoc() : null;
     }
 }
