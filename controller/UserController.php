@@ -73,7 +73,7 @@ class UserController
         $password = $_POST['password'];
         $data = [];
 
-        $user = $this->model->getUser($username, $password);
+        $user = $this->model->login($username, $password);
 
         if ($user !== null) {
             $_SESSION['user'] = $user;

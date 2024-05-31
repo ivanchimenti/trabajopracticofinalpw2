@@ -10,7 +10,5 @@ class Presenter
     {
         include_once("view/template/header.mustache");
         include_once($view);
-        include_once("view/template/footer.mustache");
-
     }
 }

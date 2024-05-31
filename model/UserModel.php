@@ -9,7 +9,7 @@ class UserModel
         $this->database = $database;
     }
 
-    public function getUser($username, $password)
+    public function login($username, $password)
     {
         $query = $this->database->prepare("SELECT * FROM users WHERE username = ?");
         $query->bind_param("s", $username);
