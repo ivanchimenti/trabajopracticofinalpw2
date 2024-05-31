@@ -17,4 +17,9 @@ function validateSession($controller, $action)
         exit();
     }
 
+    if($controller == "user" && $action == "profile" && !isset($_SESSION['user'])) {
+        header("Location: /user");
+        exit();
+    }
+
 }

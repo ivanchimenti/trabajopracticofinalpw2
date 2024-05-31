@@ -47,12 +47,13 @@ class UserController
 
     public function profile()
     {
-        if (!isset($_SESSION['user'])) {
-            header('Location: /user');
-            exit();
+        if(isset($_GET['username'])) {
+            $username = $_GET['username'];
+            $user = $this->model->getUserByUsername($username);
+        } else {
+            $user = $_SESSION['user'];
         }
 
-        $user = $_SESSION['user'];
         $data = [
             'full_name' => $user['full_name'],
             'birth_year' => $user['birth_year'],

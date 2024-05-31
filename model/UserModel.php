@@ -33,6 +33,21 @@ class UserModel
         return null;
     }
 
+    public function getUserByUsername($username)
+    {
+        $query = $this->database->prepare("SELECT * FROM users WHERE username = ?");
+        $query->bind_param("s", $username);
+        $query->execute();
+        $result = $query->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            unset($row['password']);
+            return $row;
+        }
+        return null;
+    }
+
 
     public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath)
     {
