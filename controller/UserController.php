@@ -25,11 +25,6 @@ class UserController
 
     public function lobby()
     {
-        if (!isset($_SESSION['user'])) {
-            header('Location: /user');
-            exit();
-        }
-
         $user = $_SESSION['user'];
         $data = [
             'full_name' => $user['full_name'],
@@ -148,9 +143,15 @@ class UserController
     private function uploadProfilePicture($file)
     {
         $targetDir = "uploads/profile_pictures/";
-        $targetFile = $targetDir . basename($file["name"]);
-        move_uploaded_file($file["tmp_name"], $targetFile);
-        return $targetFile;
+
+        $uniqueName = uniqid() . "." . pathinfo($file["name"], PATHINFO_EXTENSION);
+        $targetFile = $targetDir . $uniqueName;
+
+        if (move_uploaded_file($file["tmp_name"], $targetFile)) {
+            return $targetFile;
+        } else {
+            return false;
+        }
     }
 
     private function generateAuthToken()

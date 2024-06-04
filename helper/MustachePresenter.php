@@ -1,4 +1,5 @@
 <?php
+
 class MustachePresenter
 {
     private $mustache;
@@ -10,7 +11,8 @@ class MustachePresenter
         $this->mustache = new Mustache_Engine(
             array(
                 'partials_loader' => new Mustache_Loader_FilesystemLoader($partialsPathLoader)
-            ));
+            )
+        );
         $this->partialsPathLoader = $partialsPathLoader;
     }
 
@@ -23,7 +25,6 @@ class MustachePresenter
     {
         $contentAsString = file_get_contents($this->partialsPathLoader . '/header.mustache');
         $contentAsString .= file_get_contents($contentFile);
-        $contentAsString .= file_get_contents($this->partialsPathLoader . '/footer.mustache');
         return $this->mustache->render($contentAsString, $data);
     }
 }

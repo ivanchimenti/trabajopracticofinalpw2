@@ -22,4 +22,9 @@ function validateSession($controller, $action)
         exit();
     }
 
+    if($controller == "user" && $action == "lobby" && !isset($_SESSION['user'])) {
+        header("Location: /user");
+        exit();
+    }
+
 }
