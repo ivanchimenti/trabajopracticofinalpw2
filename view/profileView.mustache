@@ -5,19 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Usuario</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        #map {
+            width: 75%;
+            height: 400px;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="w3-container w3-card w3-margin w3-padding">
         <h2>Perfil del Usuario</h2>
         <p><strong>Nombre de Usuario:</strong> {{username}}</p>
+
         <img src="{{profile_picture}}" alt="Foto de Perfil" class="w3-circle" style="width:100px;height:100px;">
+
         <p><strong>Nombre Completo:</strong> {{full_name}}</p>
+
         <p><strong>Año de Nacimiento:</strong> {{birth_year}}</p>
+
         <p><strong>Sexo:</strong> {{gender}}</p>
-        <p><strong>País:</strong> {{country}}</p>
-        <p><strong>Ciudad:</strong> {{city}}</p>
+
         <p><strong>Correo Electrónico:</strong> {{email}}</p>
+
+        <div id="map"></div>
+        
         <a href="/user/lobby" class="w3-button w3-green">Volver</a>
     </div>
+
+    <script>
+        function initMap() {
+            const latitude = {{latitude}};
+            const longitude = {{longitude}};
+            const userLocation = { lat: latitude, lng: longitude };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 8,
+                center: userLocation,
+            });
+
+            new google.maps.Marker({
+                position: userLocation,
+                map: map,
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{apiKey}}&callback=initMap" async defer></script>
 </body>
 </html>

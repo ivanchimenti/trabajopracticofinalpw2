@@ -9,8 +9,8 @@ CREATE TABLE `user` (
   `full_name` varchar(255) NOT NULL,
   `birth_year` int(11) NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
+  `latitude` int(11) NOT NULL,
+  `longitude` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `profile_picture` varchar(255) NOT NULL
 );

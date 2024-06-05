@@ -11,14 +11,6 @@ class PartidaModel
 
     public function getPregunta($username)
     {
-//        $ids = implode(',', $preguntasMostradas);
-//
-//        if(empty($ids)) {
-//            $query =  $this->database->prepare("SELECT * FROM Pregunta ORDER BY RAND() LIMIT 1");
-//        } else {
-//            $query =  $this->database->prepare("SELECT * FROM Pregunta WHERE id NOT IN ($ids) ORDER BY RAND() LIMIT 1");
-//        }
-
         $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) ORDER BY RAND() LIMIT 1;");
         $query->bind_param("s", $username);
         $query->execute();
@@ -67,15 +59,15 @@ class PartidaModel
         return $result->num_rows > 0 ? $result->fetch_assoc() : null;
     }
 
-    public function addPreguntaRespondida($idPregunta,$idUsuario){
+    public function addPreguntaRespondida($idPregunta, $idUsuario)
+    {
 
         $query = $this->database->prepare("SELECT * FROM pregunta_respondida WHERE id_usuario LIKE ? AND id_pregunta = ?;");
-        $query->bind_param("si",$idUsuario, $idPregunta);
+        $query->bind_param("si", $idUsuario, $idPregunta);
         $query->execute();
         $result = $query->get_result();
 
-        if($result->num_rows != 0)
-        {
+        if($result->num_rows != 0) {
             $this->deletePreguntasRespondidas($idUsuario);
         }
 
@@ -84,7 +76,8 @@ class PartidaModel
         return $query->execute();
     }
 
-    public function deletePreguntasRespondidas($idUsuario){
+    public function deletePreguntasRespondidas($idUsuario)
+    {
         $query = $this->database->prepare("DELETE FROM pregunta_respondida WHERE id_usuario LIKE ?;");
         $query->bind_param("s", $idUsuario);
         $query->execute();

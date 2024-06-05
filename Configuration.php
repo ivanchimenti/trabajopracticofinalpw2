@@ -21,7 +21,7 @@ class Configuration
 {
     public static function getUserController(): UserController
     {
-        return new UserController(self::getPresenter(), self::getUserModel());
+        return new UserController(self::getPresenter(), self::getUserModel(), self::getApiKey());
     }
 
     public static function getPartidaController(): PartidaController
@@ -38,6 +38,12 @@ class Configuration
     {
         $config = self::getConfig();
         return new Database($config["servername"], $config["username"], $config["password"], $config["dbname"]);
+    }
+
+    private static function getApiKey()
+    {
+        $config = self::getConfig();
+        return $config["googleAPIkey"];
     }
 
     private static function getUserModel(): UserModel
