@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Usuarios</title>
+</head>
+<body>
+<h1>Ranking de Usuarios</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Posición</th>
+        <th>Usuario</th>
+        <th>Puntaje</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#ranking}}
+        <tr>
+            <td>{{@index}}</td>
+            <td>{{username}}</td>
+            <td>{{score}}</td>
+        </tr>
+    {{/ranking}}
+    </tbody>
+</table>
+</body>
+</html>

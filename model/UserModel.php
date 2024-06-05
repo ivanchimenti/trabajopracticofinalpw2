@@ -48,7 +48,6 @@ class UserModel
         return null;
     }
 
-
     public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath)
     {
         $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, country, city, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -65,4 +64,9 @@ class UserModel
         return $query->affected_rows > 0;
     }
 
+    public function incrementarPuntuacion($username) {
+        $query = $this->database->prepare("UPDATE user SET score = score + 1 WHERE username = ?");
+        $query->bind_param('s', $username);
+        return $query->execute();
+    }
 }
