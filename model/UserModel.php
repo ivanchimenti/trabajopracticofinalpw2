@@ -11,7 +11,7 @@ class UserModel
 
     public function login($username, $password)
     {
-        $query = $this->database->prepare("SELECT * FROM users WHERE username = ?");
+        $query = $this->database->prepare("SELECT * FROM user WHERE username = ?");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -35,7 +35,7 @@ class UserModel
 
     public function getUserByUsername($username)
     {
-        $query = $this->database->prepare("SELECT * FROM users WHERE username = ?");
+        $query = $this->database->prepare("SELECT * FROM user WHERE username = ?");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -51,14 +51,14 @@ class UserModel
 
     public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath)
     {
-        $query = $this->database->prepare("INSERT INTO users (username, password, authToken, full_name, birth_year, gender, country, city, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, country, city, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->bind_param("ssssisssss", $username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $country, $city, $email, $profilePicturePath);
         return $query->execute();
     }
 
     public function activateAccount($authToken)
     {
-        $query = $this->database->prepare("UPDATE users SET authToken = '' WHERE authToken = ?");
+        $query = $this->database->prepare("UPDATE user SET authToken = '' WHERE authToken = ?");
         $query->bind_param("s", $authToken);
         $query->execute();
 

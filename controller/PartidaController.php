@@ -10,10 +10,6 @@ class PartidaController
         $this->presenter = $presenter;
         $this->model = $model;
 
-        if (!isset($_SESSION['preguntas_mostradas'])) {
-            $_SESSION['preguntas_mostradas'] = [];
-        }
-
         if (!isset($_SESSION['game_over'])) {
             $_SESSION['game_over'] = false;
         }
@@ -26,9 +22,10 @@ class PartidaController
             return;
         }
 
-        $pregunta = $this->model->getPregunta($_SESSION['preguntas_mostradas']);
+        $user = $_SESSION['user'];
+        $pregunta = $this->model->getPregunta($user['username']);
 
-        if ($pregunta) {
+        if($pregunta){
             $respuestas = $this->model->getRespuestas($pregunta["id"]);
             $_SESSION['preguntas_mostradas'][] = $pregunta["id"];
             $this->presenter->render("view/partidaView.mustache", ["pregunta" => $pregunta, "respuestas" => $respuestas]);
@@ -41,11 +38,13 @@ class PartidaController
     {
         $respuestaId = $_POST['respuesta_id'];
         $respuesta = $this->model->getRespuesta($respuestaId);
+        $user = $_SESSION['user'];
 
         if ($respuesta) {
+            $this->model->addPreguntaRespondida($respuesta['idPregunta'],$user['username']);
             $correcta = $respuesta['correcta'] == 1;
             if ($correcta) {
-                $pregunta = $this->model->getPregunta($_SESSION['preguntas_mostradas']);
+                $pregunta = $this->model->getPregunta($user['username']);
                 if ($pregunta) {
                     $respuestas = $this->model->getRespuestas($pregunta["id"]);
                     $_SESSION['preguntas_mostradas'][] = $pregunta["id"];
@@ -64,7 +63,6 @@ class PartidaController
 
     public function reset()
     {
-        $_SESSION['preguntas_mostradas'] = [];
         $_SESSION['game_over'] = false;
         $this->get();
     }

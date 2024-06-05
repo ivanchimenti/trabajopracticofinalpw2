@@ -47,7 +47,7 @@ class Mustache_Parser
      * Enable pragmas across all templates, regardless of the presence of pragma
      * tags in the individual templates.
      *
-     * @internal Users should set global pragmas in Mustache_Engine, not here :)
+     * @internal user should set global pragmas in Mustache_Engine, not here :)
      *
      * @param string[] $pragmas
      */

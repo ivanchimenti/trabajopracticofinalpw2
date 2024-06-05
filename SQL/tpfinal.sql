@@ -2,7 +2,7 @@ CREATE DATABASE `tpfinal`;
 
 USE `tpfinal`;
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `authToken` varchar(255) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `users` (
   `profile_picture` varchar(255) NOT NULL
 );
 
-ALTER TABLE `users`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
 
 create table Pregunta(
@@ -45,3 +45,11 @@ INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES (7, '1939', 1),(7
 
 INSERT INTO pregunta (categoria, contenido) VALUES (1, '¿En qué año cayó el Muro de Berlín?'),(2, '¿Cuál es el deporte más popular en el mundo?'),(3, '¿Quién escribió la saga de libros "Harry Potter"?');
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES (10, '1989', 1),(10, '1990', 0),(10, '1987', 0), (10, '1991', 0),(11, 'Fútbol', 1), (11, 'Béisbol', 0),(11, 'Baloncesto', 0),(11, 'Tenis', 0),(12, 'J.K. Rowling', 1),(12, 'J.R.R. Tolkien', 0),(12, 'George R.R. Martin', 0),(12, 'Stephen King', 0);
+
+CREATE TABLE pregunta_respondida (
+                                     id INT PRIMARY KEY auto_increment,
+                                     id_usuario varchar(255),
+                                     id_pregunta INT,
+                                     FOREIGN KEY (id_usuario) REFERENCES user(username),
+                                     FOREIGN KEY (id_pregunta) REFERENCES pregunta(id)
+);
