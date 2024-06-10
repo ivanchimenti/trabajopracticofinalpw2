@@ -53,3 +53,12 @@ CREATE TABLE pregunta_respondida (
                                      FOREIGN KEY (id_usuario) REFERENCES user(username),
                                      FOREIGN KEY (id_pregunta) REFERENCES pregunta(id)
 );
+
+create table partida(
+                        id INT primary key auto_increment,
+                        username VARCHAR(255),
+                        ult_pregunta INT NOT NULL,
+                        fecha datetime NOT NULL,
+                        puntuacion INT NOT NULL,
+                        CONSTRAINT FK_PartidaUser FOREIGN KEY (username) REFERENCES user(username)
+);

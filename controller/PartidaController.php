@@ -28,6 +28,7 @@ class PartidaController
         if($pregunta){
             $respuestas = $this->model->getRespuestas($pregunta["id"]);
             $_SESSION['preguntas_mostradas'][] = $pregunta["id"];
+
             $this->presenter->render("view/partidaView.mustache", ["pregunta" => $pregunta, "respuestas" => $respuestas]);
         } else {
             $this->presenter->render("view/partidaView.mustache", ["no_more_questions" => true]);
@@ -37,13 +38,14 @@ class PartidaController
     public function answer()
     {
         $respuestaId = $_POST['respuesta_id'];
+        $timer = $_POST['timerValue'];
         $respuesta = $this->model->getRespuesta($respuestaId);
         $user = $_SESSION['user'];
 
         if ($respuesta) {
             $this->model->addPreguntaRespondida($respuesta['idPregunta'],$user['username']);
             $correcta = $respuesta['correcta'] == 1;
-            if ($correcta) {
+            if ($correcta && $timer != 0) {
                 $pregunta = $this->model->getPregunta($user['username']);
                 if ($pregunta) {
                     $respuestas = $this->model->getRespuestas($pregunta["id"]);
@@ -54,7 +56,11 @@ class PartidaController
                 }
             } else {
                 $_SESSION['game_over'] = true;
-                $this->presenter->render("view/partidaView.mustache", ["game_over" => true]);
+                if($timer == 0){
+                    $this->presenter->render("view/partidaView.mustache", ["game_over" => true,"out_of_time" => true, "timer" => $timer]);
+                } else {
+                    $this->presenter->render("view/partidaView.mustache", ["game_over" => true]);
+                }
             }
         } else {
             $this->presenter->render("view/partidaView.mustache", ["error" => "Respuesta no válida."]);
