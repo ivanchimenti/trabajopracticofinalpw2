@@ -10,14 +10,14 @@ class RankingModel
     }
 
     public function getRanking() {
-        $query = "SELECT username, score FROM user ORDER BY score DESC";
-        $result = $this->database->query($query);
+        $query = $this->database->prepare("SELECT username, score FROM user ORDER BY score DESC");
+        $query->execute();
+        $result = $query->get_result();
 
-        $ranking = [];
-        while ($row = $result->fetch_assoc()) {
-            $ranking[] = $row;
+        if($result->num_rows > 0){
+            $row = $result -> fetch_Assoc();
+           return $row;
         }
-
-        return $ranking;
+        return null;
     }
 }
