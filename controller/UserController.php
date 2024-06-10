@@ -1,5 +1,7 @@
 <?php
 
+require 'helper/sendEmail.php';
+
 class UserController
 {
     private $presenter;
@@ -46,7 +48,7 @@ class UserController
 
     public function profile()
     {
-        if(isset($_GET['username'])) {
+        if (isset($_GET['username'])) {
             $username = $_GET['username'];
             $user = $this->model->getUserByUsername($username);
         } else {
@@ -94,7 +96,6 @@ class UserController
 
     public function register()
     {
-
         $fullName = $_POST['full_name'];
         $birthYear = $_POST['birth_year'];
         $gender = $_POST['gender'];
@@ -118,7 +119,14 @@ class UserController
         $profilePicturePath = $this->uploadProfilePicture($profilePicture);
 
         if ($this->model->register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $latitude, $longitude, $email, $profilePicturePath)) {
-            $data['success'] = 'Usuario registrado exitosamente. Por favor, verifica tu correo electrónico para activar tu cuenta.';
+            $subject = "Verifica tu cuenta";
+            $body = "Por favor, haz clic en el siguiente enlace para activar tu cuenta: <a href='http://localhost/user/activate?token=$authToken'>Activar Cuenta</a>";
+
+            if (sendVerificationEmail($email, $fullName, $subject, $body)) {
+                $data['success'] = 'Usuario registrado exitosamente. Por favor, verifica tu correo electrónico para activar tu cuenta.';
+            } else {
+                $data['error'] = 'Error al enviar el correo electrónico de verificación.';
+            }
         } else {
             $data['error'] = 'Error en el registro del usuario.';
         }
@@ -142,7 +150,6 @@ class UserController
             $data['error'] = 'Token de activación inválido o la cuenta ya ha sido activada.';
         }
         $this->presenter->render("view/loginView.mustache", $data);
-
     }
 
     private function uploadProfilePicture($file)
