@@ -1,2 +1,29 @@
-Vista Editor
-<a href="/editor/logout" class="w3-button w3-green">Logout</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editor</title>
+</head>
+<body>
+    <h1>Lista de Preguntas</h1>
+    <table>
+        <tr>
+            <th>Pregunta</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        {{#questions}}
+        <tr>
+            <td>{{contenido}}</td>
+            <td>{{#estado}}Activa{{/estado}}{{^estado}}Inactiva{{/estado}}</td>
+            <td>
+                <a href="/editor/toggleQuestionState/id={{id}}" class="w3-button w3-green">{{#estado}}Desactivar{{/estado}}{{^estado}}Activar{{/estado}}</a>
+                <a href="/editor/edit/{{id}}" class="w3-button w3-blue">Editar</a>
+                <a href="/editor/delete/{{id}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de borrar esta pregunta?')">Borrar</a>
+            </td>
+        </tr>
+        {{/questions}}
+    </table>
+    <a href="/editor/add" class="w3-button w3-green">Agregar Nueva Pregunta</a>
+    <a href="/editor/logout" class="w3-button w3-green">Logout</a>
+</body>
+</html>
