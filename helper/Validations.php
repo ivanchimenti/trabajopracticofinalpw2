@@ -27,4 +27,14 @@ function validateSession($controller, $action)
         exit();
     }
 
+    if($controller == "user" && $_SESSION['user']['role'] == "a") {
+        header("Location: /admin");
+        exit();
+    }
+
+    if($controller == "user" && $_SESSION['user']['role'] == "e") {
+        header("Location: /editor");
+        exit();
+    }
+
 }

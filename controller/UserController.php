@@ -154,13 +154,13 @@ class UserController
 
     private function uploadProfilePicture($file)
     {
-        $targetDir = "uploads/profile_pictures/";
+        $targetDir = "public/profile_pictures/";
 
         $uniqueName = uniqid() . "." . pathinfo($file["name"], PATHINFO_EXTENSION);
         $targetFile = $targetDir . $uniqueName;
 
         if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-            return $targetFile;
+            return "/" . $targetFile;
         } else {
             return false;
         }

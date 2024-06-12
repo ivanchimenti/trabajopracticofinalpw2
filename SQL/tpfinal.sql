@@ -12,7 +12,8 @@ CREATE TABLE `user` (
   `latitude` int(11) NOT NULL,
   `longitude` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `profile_picture` varchar(255) NOT NULL
+  `profile_picture` varchar(255) NOT NULL,
+  `role` varchar(1)
 );
 
 ALTER TABLE `user`
