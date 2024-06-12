@@ -43,7 +43,7 @@ class UserController
             'profile_picture' => $user['profile_picture']
         ];
 
-        $this->presenter->render("view/lobbyView.mustache", $data);
+        $this->presenter->render("view/player/lobbyView.mustache", $data);
     }
 
     public function profile()
@@ -66,7 +66,7 @@ class UserController
             'profile_picture' => $user['profile_picture'],
             'apiKey' => $this->apiKey
         ];
-        $this->presenter->render("view/profileView.mustache", $data);
+        $this->presenter->render("view/player/profileView.mustache", $data);
     }
 
     public function login()

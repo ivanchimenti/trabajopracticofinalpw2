@@ -15,7 +15,7 @@ class EditorController
     {
         $questions = $this->model->getQuestions();
         $data = ['questions' => $questions];
-        $this->presenter->render("view/editorView.mustache", $data);
+        $this->presenter->render("view/editor/editorView.mustache", $data);
     }
 
     public function logout()

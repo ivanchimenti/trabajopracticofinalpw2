@@ -14,7 +14,7 @@ class AdminController
     public function get()
     {
         $data = [];
-        $this->presenter->render("view/adminView.mustache", $data);
+        $this->presenter->render("view/admin/adminView.mustache", $data);
     }
 
     public function logout()
