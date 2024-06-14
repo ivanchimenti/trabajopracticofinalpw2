@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .submit-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</h1>
+    <form action="{{#pregunta}}/editor/manageQuestion/id={{pregunta.id}}{{/pregunta}}{{^pregunta}}/editor/manageQuestion{{/pregunta}}" method="post">
+        <label for="pregunta">Ingrese pregunta:</label>
+        <input type="text" id="pregunta" name="pregunta" value="{{pregunta.contenido}}" required>
+        <label for="categoria">Seleccione una categoria:</label>
+        <select id="categoria" name="categoria">
+        <option value="1">Artes</option>
+        <option value="2">Ciencia</option>
+        <option value="3">Deportes</option>
+        <option value="4">Entretenimiento</option> 
+        <option value="5">Geografia</option>
+        <option value="6">Historia</option>
+        </select><br><br>
+        
+        <h2>Respuestas</h2>
+        <table>
+            <tr>
+                <th>Respuesta</th>
+                <th>Correcta</th>
+            </tr>
+            {{#respuestas}}
+            <tr>
+                <td><input type="text" name="respuestas[{{index}}][contenido]" value="{{contenido}}" required></td>
+                <td><input type="radio" name="correcta" value="{{index}}" {{#correcta}}checked{{/correcta}} required></td>
+            </tr>
+            {{/respuestas}}
+        </table>
+        
+        <input type="submit" value="{{#pregunta}}Actualizar Pregunta{{/pregunta}}{{^pregunta}}Agregar Pregunta{{/pregunta}}" class="submit-button">
+    </form>
+</body>
+</html>
