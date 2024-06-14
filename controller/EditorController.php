@@ -18,6 +18,26 @@ class EditorController
         $this->presenter->render("view/editor/editorView.mustache", $data);
     }
 
+    public function manageQuestionView()
+    {
+        $idPregunta = isset($_GET['id']) ? $_GET['id'] : null;
+
+        $data = [];
+        if ($idPregunta) {
+            $data['pregunta'] = $this->model->getQuestionById($idPregunta);
+            $data['respuestas'] = $this->model->getAnswers($idPregunta);
+        } else {
+            $data['respuestas'] = [
+                ['index' => 0, 'contenido' => '', 'correcta' => 0],
+                ['index' => 1, 'contenido' => '', 'correcta' => 0],
+                ['index' => 2, 'contenido' => '', 'correcta' => 0],
+                ['index' => 3, 'contenido' => '', 'correcta' => 0],
+            ];
+        }
+
+        $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
+    }
+
     public function logout()
     {
         session_destroy();
@@ -44,40 +64,22 @@ class EditorController
     public function manageQuestion()
     {
         $idPregunta = isset($_GET['id']) ? $_GET['id'] : null;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $pregunta = $_POST['pregunta'];
-            $categoria = $_POST['categoria'];
-            $respuestas = array_values($_POST['respuestas']);
-            $correctaIndex = $_POST['correcta'];
+        $pregunta = $_POST['pregunta'];
+        $categoria = $_POST['categoria'];
+        $respuestas = array_values($_POST['respuestas']);
+        $correctaIndex = $_POST['correcta'];
 
-            foreach ($respuestas as $index => &$respuesta) {
-                $respuesta['correcta'] = ($index == $correctaIndex) ? 1 : 0;
-            }
-
-            if ($idPregunta) {
-                $this->model->updateQuestion($idPregunta, $categoria, $pregunta, $respuestas);
-            } else {
-                $this->model->addQuestion($categoria, $pregunta, $respuestas);
-            }
-
-            header('Location: /editor');
-            exit();
+        foreach ($respuestas as $index => &$respuesta) {
+            $respuesta['correcta'] = ($index == $correctaIndex) ? 1 : 0;
         }
 
-        $data = [];
         if ($idPregunta) {
-            $data['pregunta'] = $this->model->getQuestionById($idPregunta);
-            $data['respuestas'] = $this->model->getAnswers($idPregunta);
+            $this->model->updateQuestion($idPregunta, $categoria, $pregunta, $respuestas);
         } else {
-            $data['respuestas'] = [
-                ['index' => 0, 'contenido' => '', 'correcta' => 0],
-                ['index' => 1, 'contenido' => '', 'correcta' => 0],
-                ['index' => 2, 'contenido' => '', 'correcta' => 0],
-                ['index' => 3, 'contenido' => '', 'correcta' => 0],
-            ];
+            $this->model->addQuestion($categoria, $pregunta, $respuestas);
         }
 
-        $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
+        header('Location: /editor');
+        exit();
     }
-
 }
