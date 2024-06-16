@@ -82,4 +82,30 @@ class PartidaModel
         $query->bind_param("s", $idUsuario);
         $query->execute();
     }
+
+    public function getPartidaActual($username)
+    {
+        $query = $this->database->prepare("SELECT MAX(id) as id FROM partida WHERE username LIKE ? GROUP BY username;");
+        $query->bind_param("s", $username);
+        $query->execute();
+        $result = $query->get_result();
+        $partida = $result->fetch_assoc();
+        var_dump($partida); // Para depuración
+        return $partida ? $partida : null;
+    }
+    public function addPartida($idUsuario, $idPregunta, $puntuacion)
+    {
+        echo "usuario " .$idUsuario. "pregunta " .$idPregunta. "puntuacion" . $puntuacion;
+        $query = $this->database->prepare("INSERT INTO partida (username, ult_pregunta,fecha, puntuacion) VALUES (?,?,NOW(),?);");
+        $query->bind_param("sii", $idUsuario, $idPregunta, $puntuacion);
+        return $query->execute();
+    }
+
+    public function updatePartida($idPartida, $idPregunta, $puntuacion)
+    {
+        echo "partida " .$idPartida. "pregunta " .$idPregunta. "puntuacion" . $puntuacion;
+        $query = $this->database->prepare("UPDATE partida SET ult_pregunta = ?, puntuacion = ? WHERE id LIKE ?;");
+        $query->bind_param("iii", $idPregunta, $puntuacion, $idPartida);
+        return $query->execute();
+    }
 }

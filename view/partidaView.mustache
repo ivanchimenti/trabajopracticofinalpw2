@@ -18,7 +18,7 @@
 
     {{^game_over}}
         {{^no_more_questions}}
-            <div>Tiempo restante: <span id="time">00:30</span></div>
+            <div>Tiempo restante: <span id="time"></span></div>
             <h2 class="w3-wide">Pregunta</h2>
             <h1>{{pregunta.contenido}}</h1>
             <h2>Respuestas:</h2>
@@ -26,23 +26,14 @@
                 {{#respuestas}}
                     <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin">{{contenido}}</button>
                 {{/respuestas}}
-                <input type="hidden" id="timerValue" name="timerValue">
             </form>
         {{/no_more_questions}}
     {{/game_over}}
 </div>
 <script>
     function startTimer(duration, display, timerValue) {
-        let startTime = localStorage.getItem('startTime');
-        let timer = duration;
 
-        if (startTime) {
-            let elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
-            timer = duration - elapsed;
-            if (timer < 0) timer = 0;
-        } else {
-            localStorage.setItem('startTime', Date.now());
-        }
+        let timer = duration;
 
         let minutes, seconds;
         let interval = setInterval(function () {
@@ -59,7 +50,6 @@
                 timer--;
             } else {
                 clearInterval(interval);
-                localStorage.removeItem('startTime');
             }
         }, 1000);
     }
@@ -68,19 +58,6 @@
         var duration = 30; // Duración en segundos
         var display = document.querySelector('#time');
         var timerValue = document.querySelector('#timerValue');
-
-        // Inicializar el temporizador antes de llamar a startTimer
-        let startTime = localStorage.getItem('startTime');
-        if (startTime) {
-            let elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
-            let timer = duration - elapsed;
-            if (timer < 0) timer = 0;
-            let minutes = parseInt(timer / 60, 10);
-            let seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.textContent = minutes + ":" + seconds;
-        }
 
         startTimer(duration, display, timerValue);
     };
