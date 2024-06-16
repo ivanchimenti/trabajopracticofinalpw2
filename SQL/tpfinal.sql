@@ -12,7 +12,8 @@ CREATE TABLE `user` (
   `latitude` int(11) NOT NULL,
   `longitude` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `profile_picture` varchar(255) NOT NULL
+  `profile_picture` varchar(255) NOT NULL,
+  `role` varchar(1)
 );
 
 ALTER TABLE `user`
@@ -22,14 +23,15 @@ create table Pregunta(
                          id INT auto_increment,
                          categoria INT NOT NULL,
                          contenido TEXT NOT NULL,
-                         primary key(id)
+                         primary key(id),
+                         estado TINYINT(1)
 );
 
 create table Respuesta(
                           id INT auto_increment,
                           idPregunta INT NOT NULL,
                           contenido TEXT NOT NULL,
-                          correcta tinyint not null,
+                          correcta TINYINT(1) not null,
                           primary key(id),
                           foreign key(idPregunta) references Pregunta(id)
 );

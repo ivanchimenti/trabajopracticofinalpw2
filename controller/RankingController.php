@@ -14,7 +14,7 @@ class RankingController
     public function get()
     {
         $ranking = $this->model->getRanking();
-        $this->presenter->render("view/rankingView.mustache", ["ranking" => $ranking]);
+        $this->presenter->render("view/player/rankingView.mustache", ["ranking" => $ranking]);
     }
 }
 

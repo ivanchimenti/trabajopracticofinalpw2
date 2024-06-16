@@ -1,10 +1,14 @@
 <?php
 
 include_once("controller/UserController.php");
+include_once("controller/AdminController.php");
+include_once("controller/EditorController.php");
 include_once("controller/PartidaController.php");
 include_once("controller/RankingController.php");
 
 include_once("model/UserModel.php");
+include_once("model/AdminModel.php");
+include_once("model/EditorModel.php");
 include_once("model/PartidaModel.php");
 include_once("model/RankingModel.php");
 
@@ -22,6 +26,16 @@ class Configuration
     public static function getUserController(): UserController
     {
         return new UserController(self::getPresenter(), self::getUserModel(), self::getApiKey());
+    }
+
+    public static function getAdminController(): AdminController
+    {
+        return new AdminController(self::getPresenter(), self::getUserModel());
+    }
+
+    public static function getEditorController(): EditorController
+    {
+        return new EditorController(self::getPresenter(), self::getEditorModel());
     }
 
     public static function getPartidaController(): PartidaController
@@ -49,6 +63,16 @@ class Configuration
     private static function getUserModel(): UserModel
     {
         return new UserModel(self::getDatabase());
+    }
+
+    private static function getAdminModel(): AdminModel
+    {
+        return new AdminModel(self::getDatabase());
+    }
+
+    private static function getEditorModel(): EditorModel
+    {
+        return new EditorModel(self::getDatabase());
     }
 
     private static function getPartidaModel(): PartidaModel
