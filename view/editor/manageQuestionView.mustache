@@ -2,23 +2,6 @@
 <html>
 <head>
     <title>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .submit-button {
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <h1>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</h1>
@@ -35,8 +18,7 @@
         <option value="6">Historia</option>
         </select><br><br>
         
-        <h2>Respuestas</h2>
-        <table>
+        <table class="w3-table-all">
             <tr>
                 <th>Respuesta</th>
                 <th>Correcta</th>
@@ -49,7 +31,7 @@
             {{/respuestas}}
         </table>
         
-        <input type="submit" value="{{#pregunta}}Actualizar Pregunta{{/pregunta}}{{^pregunta}}Agregar Pregunta{{/pregunta}}" class="submit-button">
+        <input type="submit" class="w3-button w3-green w3-margin-top" value="{{#pregunta}}Actualizar Pregunta{{/pregunta}}{{^pregunta}}Agregar Pregunta{{/pregunta}}" class="submit-button">
     </form>
 </body>
 </html>

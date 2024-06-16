@@ -18,26 +18,6 @@ class EditorController
         $this->presenter->render("view/editor/editorView.mustache", $data);
     }
 
-    public function manageQuestionView()
-    {
-        $idPregunta = isset($_GET['id']) ? $_GET['id'] : null;
-
-        $data = [];
-        if ($idPregunta) {
-            $data['pregunta'] = $this->model->getQuestionById($idPregunta);
-            $data['respuestas'] = $this->model->getAnswers($idPregunta);
-        } else {
-            $data['respuestas'] = [
-                ['index' => 0, 'contenido' => '', 'correcta' => 0],
-                ['index' => 1, 'contenido' => '', 'correcta' => 0],
-                ['index' => 2, 'contenido' => '', 'correcta' => 0],
-                ['index' => 3, 'contenido' => '', 'correcta' => 0],
-            ];
-        }
-
-        $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
-    }
-
     public function logout()
     {
         session_destroy();
@@ -59,6 +39,26 @@ class EditorController
         $this->model->deleteQuestion($idPregunta);
         header('Location: /editor');
         exit();
+    }
+
+    public function manageQuestionView()
+    {
+        $idPregunta = isset($_GET['id']) ? $_GET['id'] : null;
+
+        $data = [];
+        if ($idPregunta) {
+            $data['pregunta'] = $this->model->getQuestionById($idPregunta);
+            $data['respuestas'] = $this->model->getAnswers($idPregunta);
+        } else {
+            $data['respuestas'] = [
+                ['index' => 0, 'contenido' => '', 'correcta' => 0],
+                ['index' => 1, 'contenido' => '', 'correcta' => 0],
+                ['index' => 2, 'contenido' => '', 'correcta' => 0],
+                ['index' => 3, 'contenido' => '', 'correcta' => 0],
+            ];
+        }
+
+        $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
     }
 
     public function manageQuestion()
