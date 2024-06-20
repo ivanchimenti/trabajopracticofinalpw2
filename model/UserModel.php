@@ -63,11 +63,4 @@ class UserModel
 
         return $query->affected_rows > 0;
     }
-
-    public function incrementarPuntuacion($username)
-    {
-        $query = $this->database->prepare("UPDATE user SET score = score + 1 WHERE username = ?");
-        $query->bind_param('s', $username);
-        return $query->execute();
-    }
 }
