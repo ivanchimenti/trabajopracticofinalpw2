@@ -31,7 +31,7 @@
     {{/game_over}}
 </div>
 <script>
-    function startTimer(duration, display, timerValue) {
+    function startTimer(duration, display) {
 
         let timer = duration;
 
@@ -43,8 +43,9 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = minutes + ":" + seconds;
-            timerValue.value = timer;
+            if (display) {
+                display.textContent = minutes + ":" + seconds;
+            }
 
             if (timer > 0) {
                 timer--;
@@ -54,12 +55,26 @@
         }, 1000);
     }
 
+    // function detectReload() {
+    //     // Verificar si la página ha sido recargada
+    //     var navigation = performance.getEntriesByType("navigation")[0];
+    //     if (navigation && navigation.type === 'reload') {
+    //         // Enviar solicitud al servidor para registrar la recarga
+    //         var xhr = new XMLHttpRequest();
+    //         xhr.open("POST", "localhost/partida/get", true);
+    //         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //         xhr.send("reload=true");
+    //     }
+    // }
+
     window.onload = function () {
         var duration = 30; // Duración en segundos
         var display = document.querySelector('#time');
-        var timerValue = document.querySelector('#timerValue');
 
-        startTimer(duration, display, timerValue);
+        startTimer(duration, display);
     };
+
+    // Llamar a la función para detectar recarga de página
+    // detectReload();
 </script>
 
