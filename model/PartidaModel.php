@@ -11,6 +11,8 @@ class PartidaModel
 
     public function getPregunta($username)
     {
+//        $dificultad = $this->getDificultadJugador($username);
+//        echo "ESTA ES LA DIFICULTAD DEL USUARIO: " . $dificultad;
         $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) ORDER BY RAND() LIMIT 1;");
         $query->bind_param("s", $username);
         $query->execute();
@@ -59,7 +61,7 @@ class PartidaModel
         return $result->num_rows > 0 ? $result->fetch_assoc() : null;
     }
 
-    public function addPreguntaRespondida($idPregunta, $idUsuario)
+    public function addPreguntaRespondida($idPregunta, $idUsuario,$acierto)
     {
 
         $query = $this->database->prepare("SELECT * FROM pregunta_respondida WHERE id_usuario LIKE ? AND id_pregunta = ?;");
@@ -71,10 +73,40 @@ class PartidaModel
             $this->deletePreguntasRespondidas($idUsuario);
         }
 
-        $query = $this->database->prepare("INSERT INTO pregunta_respondida (id_pregunta,id_usuario) VALUES (?,?);");
-        $query->bind_param("is", $idPregunta, $idUsuario);
+        $query = $this->database->prepare("INSERT INTO pregunta_respondida (id_pregunta,id_usuario,acierto) VALUES (?,?,?);");
+        $query->bind_param("isi", $idPregunta, $idUsuario,$acierto);
         return $query->execute();
     }
+
+//    public function getDificultadJugador($idUsuario){
+//        $query = $this->database->prepare("SELECT COUNT(*) AS cantAcertada FROM pregunta_respondida WHERE id_usuario LIKE ? AND acierto = 1;");
+//        $query->bind_param("s",$idUsuario);
+//        $query->execute();
+//        $result1 = $query->get_result();
+//
+//        if($result1->num_rows == 0) {
+//            return false;
+//        }
+//
+//        $query = $this->database->prepare("SELECT COUNT(*) AS cantPreguntas FROM pregunta;");
+//        $query->bind_param("s",$idUsuario);
+//        $query->execute();
+//        $result2 = $query->get_result();
+//
+//        $cantAcertada = $result1->fetch_assoc()['cantAcertada'];
+//        $cantPreguntas = $result2->fetch_assoc()['cantPreguntas'];
+//
+//        $porcentaje = ($cantAcertada*100)/$cantPreguntas;
+//
+//        switch($porcentaje){
+//            case $porcentaje >= 70:
+//                return 'dificil';
+//            case $porcentaje >= 30:
+//                return 'normal';
+//            default:
+//                return 'facil';
+//        }
+//    }
 
     public function deletePreguntasRespondidas($idUsuario)
     {
