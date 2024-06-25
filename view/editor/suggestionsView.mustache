@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sugerencias</title>
+</head>
+<body>
+    <div class="w3-container">
+        <h1>Preguntas Sugeridas</h1>
+        <table class="w3-table-all">
+            <thead>
+                <tr class="w3-light-grey">
+                    <th>Pregunta</th>
+                    <th>Usuario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#suggestions}}
+                <tr>
+                    <td>{{contenido}}</td>
+                    <td>{{username}}</td>
+                    <td>
+                        <a href="/editor/manageSuggestionView/id={{id}}" class="w3-button w3-blue w3-margin-right">Editar</a>
+                        <a href="/editor/rejectSuggestion/id={{id}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de rechazar esta sugerencia?')">Rechazar</a>
+                    </td>
+                </tr>
+                {{/suggestions}}
+            </tbody>
+        </table>
+        <div class="w3-margin-top"> 
+            <a href="/editor/manageQuestionView" class="w3-button w3-green">Agregar Nueva Pregunta</a>
+            <a href="/editor/editorView" class="w3-button w3-green">Preguntas</a>
+            <a href="/editor/logout" class="w3-button w3-red">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

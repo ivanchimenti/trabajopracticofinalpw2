@@ -64,3 +64,11 @@ create table partida(
                         puntuacion INT NOT NULL,
                         CONSTRAINT FK_PartidaUser FOREIGN KEY (username) REFERENCES user(username)
 );
+
+CREATE TABLE `sugerencia` (
+  `id` INT primary key auto_increment,
+  `contenido` varchar(255) NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  FOREIGN KEY (username) REFERENCES user(username)
+);

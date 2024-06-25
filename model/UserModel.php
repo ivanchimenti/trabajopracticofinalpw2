@@ -63,4 +63,11 @@ class UserModel
 
         return $query->affected_rows > 0;
     }
+
+    public function suggestQuestion($question, $username)
+    {
+        $query = $this->database->prepare("INSERT INTO sugerencia (contenido, username, estado) VALUES (?, ?, 0)");
+        $query->bind_param("ss", $question, $username);
+        return $query->execute();
+    }
 }

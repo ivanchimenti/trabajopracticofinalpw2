@@ -82,4 +82,41 @@ class EditorController
         header('Location: /editor');
         exit();
     }
+
+    public function suggestionsView()
+    {
+        $suggestions = $this->model->getSuggestions();
+        $data = ['suggestions' => $suggestions];
+        $this->presenter->render("view/editor/suggestionsView.mustache", $data);
+    }
+
+    public function rejectSuggestion()
+    {
+        $idSugerencia = $_GET['id'];
+        $this->model->rejectSuggestion($idSugerencia);
+        header('Location: /editor/suggestionsView');
+        exit();
+    }
+
+    public function manageSuggestionView()
+    {
+        $idSugerencia = $_GET['id'];
+        $suggestion = $this->model->getSuggestionById($idSugerencia);
+        $data = ['suggestion' => $suggestion];
+        $this->presenter->render("view/editor/manageSuggestionView.mustache", $data);
+    }
+
+    private function alterSuggestionState()
+    {
+        $idSugerencia = $_GET['id'];
+        $this->model->alterSuggestionState($idSugerencia);
+    }
+
+    public function acceptSuggestion()
+    {
+        $this->alterSuggestionState();
+        $this->manageQuestion();
+    }
+
+
 }
