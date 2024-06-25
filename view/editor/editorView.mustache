@@ -4,13 +4,16 @@
     <title>Editor</title>
 </head>
 <body>
+    <div class="w3-container">
     <h1>Lista de Preguntas</h1>
     <table class="w3-table-all">
-        <tr>
-            <th>Pregunta</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
+        <thead>
+            <tr class="w3-light-grey">
+                <th>Pregunta</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
         {{#questions}}
         <tr>
             <td>{{contenido}}</td>
@@ -25,7 +28,7 @@
     </table>
     <div class="w3-margin-top"> 
     <a href="/editor/manageQuestionView" class="w3-button w3-green">Agregar Nueva Pregunta</a>
-    <a href="/editor/logout" class="w3-button w3-green">Logout</a>
+    </div>
     </div>
 </body>
 </html>

@@ -21,6 +21,26 @@ class UserController
         $this->presenter->render("view/loginView.mustache", $data);
     }
 
+    public function suggestView()
+    {
+        $data = [];
+        $this->presenter->render("view/player/suggestQuestionView.mustache", $data);
+    }
+
+    public function suggest()
+    {
+        $question = $_POST['question'];
+        $username = $_SESSION['user']['username'];
+        $data = [];
+
+        if($this->model->suggestQuestion($question, $username)) {
+            $data['success'] = 'Pregunta enviada exitosamente.';
+        } else {
+            $data['error'] = 'Error al enviar la pregunta.';
+        }
+        $this->presenter->render("view/player/suggestQuestionView.mustache", $data);
+    }
+
     public function registerView()
     {
         $data = [

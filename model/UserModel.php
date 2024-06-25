@@ -50,7 +50,7 @@ class UserModel
 
     public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $latitude, $longitude, $email, $profilePicturePath)
     {
-        $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, latitude, longitude, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, latitude, longitude, email, profile_picture, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'u')");
         $query->bind_param("ssssisiiss", $username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $latitude, $longitude, $email, $profilePicturePath);
         return $query->execute();
     }
@@ -62,5 +62,12 @@ class UserModel
         $query->execute();
 
         return $query->affected_rows > 0;
+    }
+
+    public function suggestQuestion($question, $username)
+    {
+        $query = $this->database->prepare("INSERT INTO sugerencia (contenido, username, estado) VALUES (?, ?, 0)");
+        $query->bind_param("ss", $question, $username);
+        return $query->execute();
     }
 }

@@ -100,11 +100,45 @@ class EditorModel
         $result = $query->get_result();
 
         $answers = array();
+        $i = 0;
 
         while ($row = $result->fetch_assoc()) {
+            $row['index'] = $i++;
             $answers[] = $row;
         }
 
         return $answers;
+    }
+
+    public function getSuggestions()
+    {
+        $query = $this->database->prepare("SELECT * FROM Sugerencia WHERE estado = 0");
+        $query->execute();
+        $result = $query->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function rejectSuggestion($idSugerencia)
+    {
+        $query = $this->database->prepare("DELETE FROM Sugerencia WHERE id = ?");
+        $query->bind_param("i", $idSugerencia);
+        $query->execute();
+    }
+
+    public function alterSuggestionState($idSugerencia)
+    {
+        $query = $this->database->prepare("UPDATE Sugerencia SET estado = NOT estado WHERE id = ?");
+        $query->bind_param("i", $idSugerencia);
+        $query->execute();
+    }
+
+    public function getSuggestionById($idSugerencia)
+    {
+        $query = $this->database->prepare("SELECT * FROM Sugerencia WHERE id = ?");
+        $query->bind_param("i", $idSugerencia);
+        $query->execute();
+        $result = $query->get_result();
+        return $result->fetch_assoc();
     }
 }

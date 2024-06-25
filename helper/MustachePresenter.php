@@ -23,7 +23,26 @@ class MustachePresenter
 
     public function generateHtml($contentFile, $data = array())
     {
-        $contentAsString = file_get_contents($this->partialsPathLoader . '/header.mustache');
+        $headerFile = $this->partialsPathLoader . '/header.mustache'; // Default header file
+
+        if (isset($_SESSION['user']['role'])) {
+            switch ($_SESSION['user']['role']) {
+                case 'e':
+                    $headerFile = $this->partialsPathLoader . '/headerEditor.mustache';
+                    break;
+                case 'a':
+                    $headerFile = $this->partialsPathLoader . '/headerAdmin.mustache';
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (file_exists($headerFile)) {
+            $contentAsString = file_get_contents($headerFile);
+        } else {
+            $contentAsString = file_get_contents($this->partialsPathLoader . '/header.mustache');
+        }
+
         $contentAsString .= file_get_contents($contentFile);
         return $this->mustache->render($contentAsString, $data);
     }
