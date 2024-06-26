@@ -59,8 +59,8 @@ class PartidaController
         $user = $_SESSION['user'];
 
         if ($respuesta) {
-            $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username']);
             $correcta = $respuesta['correcta'] == 1;
+            $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username'], $correcta);
             if ($correcta) {
                 $_SESSION['puntuacion'] += 1;
                 $this->get();
