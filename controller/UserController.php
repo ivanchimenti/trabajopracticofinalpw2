@@ -41,6 +41,19 @@ class UserController
         $this->presenter->render("view/player/suggestQuestionView.mustache", $data);
     }
 
+    public function reportQuestion()
+    {
+        $questionId = $_GET['questionId'];
+        $username = $_SESSION['user']['username'];
+        $data = [];
+
+        if($this->model->reportQuestion($questionId, $username)) {
+            $data['success'] = 'Pregunta reportada exitosamente.';
+        } else {
+            $data['error'] = 'Error al reportar la pregunta.';
+        }
+    }
+
     public function registerView()
     {
         $data = [

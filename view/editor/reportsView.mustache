@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+</head>
+<body>
+    <div class="w3-container">
+        <h1>Lista de Reportes</h1>
+        <table class="w3-table-all">
+            <thead>
+                <tr class="w3-light-grey">
+                    <th>Pregunta</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            {{#reports}}
+            <tr>
+                <td>{{contenido}}</td>
+                <td>{{#estado}}Activa{{/estado}}{{^estado}}Inactiva{{/estado}}</td>
+                <td>
+                    <a href="/editor/manageQuestionView/id={{id_pregunta}}" class="w3-button w3-blue">Editar</a>
+                    <a href="/editor/deleteQuestion/id={{id_pregunta}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de borrar esta pregunta?')">Borrar</a>
+                </td>
+            </tr>
+            {{/reports}}
+        </table>
+    </div>
+</body>
+</html>
