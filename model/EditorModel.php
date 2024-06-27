@@ -144,7 +144,11 @@ class EditorModel
 
     public function listReports()
     {
-        $query = $this->database->prepare("SELECT DISTINCT id_pregunta FROM reporte");
+        $query = $this->database->prepare(
+            "SELECT DISTINCT reporte.id_pregunta, pregunta.contenido 
+        FROM reporte 
+        JOIN pregunta ON reporte.id_pregunta = pregunta.id"
+        );
         $query->execute();
         $result = $query->get_result();
 
@@ -155,6 +159,7 @@ class EditorModel
 
         return $reports;
     }
+
 
     public function listReportById()
     {

@@ -48,9 +48,8 @@ class UserController
         $data = [];
 
         if($this->model->reportQuestion($questionId, $username)) {
-            $data['success'] = 'Pregunta reportada exitosamente.';
-        } else {
-            $data['error'] = 'Error al reportar la pregunta.';
+            header('Location: /partida/get');
+            exit();
         }
     }
 
