@@ -5,21 +5,29 @@ include_once("controller/AdminController.php");
 include_once("controller/EditorController.php");
 include_once("controller/PartidaController.php");
 include_once("controller/RankingController.php");
+include_once("controller/PdfCreatorController.php");
+include_once("controller/GraficosController.php");
+
 
 include_once("model/UserModel.php");
 include_once("model/AdminModel.php");
 include_once("model/EditorModel.php");
 include_once("model/PartidaModel.php");
 include_once("model/RankingModel.php");
+include_once("model/GraficosModel.php");
 
 include_once("helper/Database.php");
 include_once("helper/Router.php");
 include_once("helper/Validations.php");
-
 include_once("helper/Presenter.php");
 include_once("helper/MustachePresenter.php");
+include_once("helper/PdfCreator.php");
+include_once("helper/GraficosCreator.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
+include_once('vendor/dompdf/autoload.inc.php');
+include_once('vendor/jpgraph/src/jpgraph.php');
+include_once('vendor/jpgraph/src/jpgraph_line.php');
 
 class Configuration
 {
@@ -46,6 +54,16 @@ class Configuration
     public static function getRankingController(): RankingController
     {
         return new RankingController(self::getPresenter(), self::getRankingModel());
+    }
+
+    public static function getPdfCreatorController(): PdfCreatorController
+    {
+        return new PdfCreatorController(self::getPresenter(),self::getPdfCreator());
+    }
+
+    public static function getGraficosController(): GraficosController
+    {
+        return new GraficosController(self::getPresenter(),self::getGraficosModel(),self::getGraficosCreator());
     }
 
     private static function getDatabase()
@@ -84,6 +102,10 @@ class Configuration
     {
         return new RankingModel(self::getDatabase());
     }
+    private static function getGraficosModel(): GraficosModel
+    {
+        return new GraficosModel(self::getDatabase());
+    }
 
     private static function getConfig()
     {
@@ -98,5 +120,14 @@ class Configuration
     private static function getPresenter(): MustachePresenter
     {
         return new MustachePresenter("view/template");
+    }
+
+    private static function getPdfCreator(): PdfCreator
+    {
+        return new PdfCreator();
+    }
+    private static function getGraficosCreator(): GraficosCreator
+    {
+        return new GraficosCreator();
     }
 }
