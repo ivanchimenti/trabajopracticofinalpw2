@@ -141,4 +141,38 @@ class EditorModel
         $result = $query->get_result();
         return $result->fetch_assoc();
     }
+
+    public function listReports()
+    {
+        $query = $this->database->prepare(
+            "SELECT DISTINCT reporte.id_pregunta, pregunta.contenido 
+        FROM reporte 
+        JOIN pregunta ON reporte.id_pregunta = pregunta.id"
+        );
+        $query->execute();
+        $result = $query->get_result();
+
+        $reports = array();
+        while ($row = $result->fetch_assoc()) {
+            $reports[] = $row;
+        }
+
+        return $reports;
+    }
+
+
+    public function listReportById()
+    {
+        $query = $this->database->prepare("SELECT * FROM reporte WHERE id_pregunta = ?");
+        $query->bind_param("i", $questionId);
+        $query->execute();
+        $result = $query->get_result();
+
+        $reports = array();
+        while ($row = $result->fetch_assoc()) {
+            $reports[] = $row;
+        }
+
+        return $reports;
+    }
 }

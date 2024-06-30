@@ -10,31 +10,22 @@
         <a href="/partida/reset" class="w3-button w3-light-grey">Volver a Jugar</a>
     {{/game_over}}
 
-    {{#no_more_questions}}
-        <h2 class="w3-wide">¡Felicitaciones!</h2>
-        <h1>Has respondido todas las preguntas correctamente.</h1>
-        <a href="/partida/reset" class="w3-button w3-light-grey">Volver a Jugar</a>
-    {{/no_more_questions}}
-
     {{^game_over}}
-        {{^no_more_questions}}
-            <div>Tiempo restante: <span id="time"></span></div>
-            <h2 class="w3-wide">Pregunta</h2>
-            <h1>{{pregunta.contenido}}</h1>
-            <h2>Respuestas:</h2>
-            <form action="/partida/answer" method="post">
-                {{#respuestas}}
-                    <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin">{{contenido}}</button>
-                {{/respuestas}}
-            </form>
-        {{/no_more_questions}}
+        <div>Tiempo restante: <span id="time"></span></div>
+        <h2 class="w3-wide">Pregunta</h2>
+        <h1>{{pregunta.contenido}}</h1>
+        <h2>Respuestas:</h2>
+        <form action="/partida/answer" method="post">
+            {{#respuestas}}
+                <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin">{{contenido}}</button>
+            {{/respuestas}}
+        </form>
+        <a href="/user/reportQuestion/questionId={{pregunta.id}}">Reportar Pregunta</a>
     {{/game_over}}
 </div>
 <script>
     function startTimer(duration, display) {
-
         let timer = duration;
-
         let minutes, seconds;
         let interval = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -55,26 +46,10 @@
         }, 1000);
     }
 
-    // function detectReload() {
-    //     // Verificar si la página ha sido recargada
-    //     var navigation = performance.getEntriesByType("navigation")[0];
-    //     if (navigation && navigation.type === 'reload') {
-    //         // Enviar solicitud al servidor para registrar la recarga
-    //         var xhr = new XMLHttpRequest();
-    //         xhr.open("POST", "localhost/partida/get", true);
-    //         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //         xhr.send("reload=true");
-    //     }
-    // }
-
     window.onload = function () {
         var duration = 30; // Duración en segundos
         var display = document.querySelector('#time');
 
         startTimer(duration, display);
     };
-
-    // Llamar a la función para detectar recarga de página
-    // detectReload();
 </script>
-

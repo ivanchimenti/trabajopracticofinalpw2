@@ -118,5 +118,11 @@ class EditorController
         $this->manageQuestion();
     }
 
+    public function reportsView()
+    {
+        $reports = $this->model->listReports();
+        $data = ['reports' => $reports];
+        $this->presenter->render("view/editor/reportsView.mustache", $data);
+    }
 
 }
