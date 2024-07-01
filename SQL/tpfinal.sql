@@ -79,8 +79,8 @@ CREATE TABLE `sugerencia` (
 
 CREATE TABLE `reporte` (
   `id` int(11) PRIMARY KEY auto_increment,
-  `user_username` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `id_pregunta` int(11) NOT NULL,
-  FOREIGN KEY (user_username) REFERENCES user(username),
+  FOREIGN KEY (username) REFERENCES user(username),
   FOREIGN KEY (id_pregunta) REFERENCES pregunta(id)
 )
