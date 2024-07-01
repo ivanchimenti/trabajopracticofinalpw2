@@ -13,7 +13,7 @@ class PartidaModel
     {
 //        $dificultad = $this->getDificultadJugador($username);
 //        echo "ESTA ES LA DIFICULTAD DEL USUARIO: " . $dificultad;
-        $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) ORDER BY RAND() LIMIT 1;");
+        $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) AND estado = 1 ORDER BY RAND() LIMIT 1;");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -23,7 +23,7 @@ class PartidaModel
         } else {
             $this->deletePreguntasRespondidas($username);
 
-            $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) ORDER BY RAND() LIMIT 1;");
+            $query =  $this->database->prepare("SELECT * FROM Pregunta p WHERE p.id NOT IN (SELECT pr.id_pregunta FROM Pregunta_Respondida pr WHERE pr.id_usuario = ?) AND estado = 1 ORDER BY RAND() LIMIT 1;");
             $query->bind_param("s", $username);
             $query->execute();
             $result = $query->get_result();

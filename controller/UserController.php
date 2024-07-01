@@ -114,17 +114,36 @@ class UserController
         QRcode::png($text, $file, QR_ECLEVEL_L, 10);
     }
 
+    public function errorView(){
+        $data = [];
+        $this->presenter->render("view/template/accessDeniedView.mustache",$data);
+    }
+
     public function login()
     {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $data = [];
+        $role = '';
 
         $user = $this->model->login($username, $password);
 
         if ($user !== null) {
             $_SESSION['user'] = $user;
-            header('Location: /user/lobby');
+
+            switch($_SESSION['user']['role']){
+                case 'a':
+                    $role = 'admin';
+                    break;
+                case 'e':
+                    $role = 'editor';
+                    break;
+                case 'u':
+                    $role = 'user';
+                    break;
+            }
+
+            header('Location: /' . $role);
             exit();
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';
