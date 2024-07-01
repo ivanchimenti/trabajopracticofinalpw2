@@ -13,8 +13,8 @@ class RankingController
 
     public function get()
     {
-        $resultado = $this->model->getRanking();
-        $this->presenter->render("view/player/rankingView.mustache", ["ranking" => $resultado]);
+        $ranking = $this->model->getRanking();
+        $this->presenter->render("view/player/rankingView.mustache", ["ranking" => $ranking]);
     }
 }
 
