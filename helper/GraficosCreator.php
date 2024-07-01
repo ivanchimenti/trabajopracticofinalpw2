@@ -17,7 +17,7 @@ class GraficosCreator{
         $graph->legend->SetFrameWeight(1);
 
 // Output line
-        $graph->Stroke("lineas.png");
+        $graph->Stroke();
     }
 }
 
