@@ -11,6 +11,11 @@
             height: 400px;
             margin: 20px 0;
         }
+        #qrcode {
+            width: 100px;
+            height: 100px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +34,9 @@
         <p><strong>Correo Electrónico:</strong> {{email}}</p>
         <p><strong>Ubicación:</strong></p>
         <div id="map"></div>
-        
+        <div>
+        <img id="qrcode" src="/{{ qrCodeFile }}" alt="QR Code for Profile Link">
+        </div>
         <a href="/user/lobby" class="w3-button w3-green">Volver</a>
     </div>
 

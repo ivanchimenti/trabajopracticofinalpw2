@@ -87,6 +87,11 @@ class UserController
             $user = $_SESSION['user'];
         }
 
+
+        $profileLink = "http://localhost/user/profile/username=" . $user['username'];
+        $qrCodeFile = 'public/qrcodes/' . $user['username'] . '.png';
+        $this->generateQRCode($profileLink, $qrCodeFile);
+
         $data = [
             'full_name' => $user['full_name'],
             'birth_year' => $user['birth_year'],
@@ -96,9 +101,17 @@ class UserController
             'email' => $user['email'],
             'username' => $user['username'],
             'profile_picture' => $user['profile_picture'],
+            'qrCodeFile' => $qrCodeFile,
             'apiKey' => $this->apiKey
         ];
         $this->presenter->render("view/player/profileView.mustache", $data);
+    }
+
+    private function generateQRCode($text, $file)
+    {
+        require_once('vendor/phpqrcode/qrlib.php');
+
+        QRcode::png($text, $file, QR_ECLEVEL_L, 10);
     }
 
     public function login()
