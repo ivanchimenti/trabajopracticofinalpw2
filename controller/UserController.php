@@ -48,8 +48,8 @@ class UserController
         $data = [];
 
         if($this->model->reportQuestion($questionId, $username)) {
-            header('Location: /partida/get');
-            exit();
+            redirect('/partida/get');
+
         }
     }
 
@@ -155,8 +155,7 @@ class UserController
                     break;
             }
 
-            header('Location: /' . $role);
-            exit();
+            redirect('/' . $role);
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';
             $this->presenter->render("view/template/loginView.mustache", $data);
@@ -166,8 +165,7 @@ class UserController
     public function logout()
     {
         session_destroy();
-        header('Location: /user');
-        exit();
+        redirect('/user');
     }
 
     public function register()

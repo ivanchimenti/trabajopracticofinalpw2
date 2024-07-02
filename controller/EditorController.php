@@ -21,24 +21,21 @@ class EditorController
     public function logout()
     {
         session_destroy();
-        header('Location: /user');
-        exit();
+        redirect('/user');
     }
 
     public function toggleQuestionState()
     {
         $id = $_GET['id'];
         $this->model->toggleQuestionState($id);
-        header('Location: /editor');
-        exit();
+        redirect('/editor');
     }
 
     public function deleteQuestion()
     {
         $idPregunta = $_GET['id'];
         $this->model->deleteQuestion($idPregunta);
-        header('Location: /editor');
-        exit();
+        redirect('/editor');
     }
 
     public function manageQuestionView()
@@ -79,8 +76,8 @@ class EditorController
             $this->model->addQuestion($categoria, $pregunta, $respuestas);
         }
 
-        header('Location: /editor');
-        exit();
+        redirect('/editor');
+
     }
 
     public function suggestionsView()
@@ -94,8 +91,8 @@ class EditorController
     {
         $idSugerencia = $_GET['id'];
         $this->model->rejectSuggestion($idSugerencia);
-        header('Location: /editor/suggestionsView');
-        exit();
+        redirect('/editor/suggestionsView');
+
     }
 
     public function manageSuggestionView()

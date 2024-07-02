@@ -20,7 +20,6 @@ class AdminController
     public function logout()
     {
         session_destroy();
-        header('Location: /user');
-        exit();
+        redirect('/user');
     }
 }

@@ -2,40 +2,34 @@
 
 function validateSession($controller, $action)
 {
-    if($controller == "user" && ($action == "" ||$action == "get") && isset($_SESSION['user'])) {
-        if($_SESSION['user']['role'] != "u"){
-            header("Location: /user/errorView");
-            exit();
+    if($controller == "user" && ($action == "" || $action == "get") && isset($_SESSION['user'])) {
+        if($_SESSION['user']['role'] != "u") {
+            redirect("/user/errorView");
         }
-        header("Location: /user/lobby");
-        exit();
+        redirect("/user/lobby");
     }
 
     if($controller == "admin"  && isset($_SESSION['user'])) {
-        if($_SESSION['user']['role'] != "a"){
-            header("Location: /user/errorView");
-            exit();
+        if($_SESSION['user']['role'] != "a") {
+            redirect("/user/errorView");
         }
     }
 
     if($controller == "pdfCreator"  && isset($_SESSION['user'])) {
-        if($_SESSION['user']['role'] != "a"){
-            header("Location: /user/errorView");
-            exit();
+        if($_SESSION['user']['role'] != "a") {
+            redirect("/user/errorView");
         }
     }
 
     if($controller == "graficos"  && isset($_SESSION['user'])) {
-        if($_SESSION['user']['role'] != "a"){
-            header("Location: /user/errorView");
-            exit();
+        if($_SESSION['user']['role'] != "a") {
+            redirect("/user/errorView");
         }
     }
 
     if($controller == "editor"  && isset($_SESSION['user'])) {
-        if($_SESSION['user']['role'] != "e"){
-            header("Location: /user/errorView");
-            exit();
+        if($_SESSION['user']['role'] != "e") {
+            redirect("/user/errorView");
         }
     }
 

@@ -18,6 +18,7 @@ include_once("model/GraficosModel.php");
 
 include_once("helper/Database.php");
 include_once("helper/Router.php");
+include_once("helper/redirect.php");
 include_once("helper/Validations.php");
 include_once("helper/Presenter.php");
 include_once("helper/MustachePresenter.php");
@@ -58,12 +59,12 @@ class Configuration
 
     public static function getPdfCreatorController(): PdfCreatorController
     {
-        return new PdfCreatorController(self::getPresenter(),self::getPdfCreator());
+        return new PdfCreatorController(self::getPresenter(), self::getPdfCreator());
     }
 
     public static function getGraficosController(): GraficosController
     {
-        return new GraficosController(self::getPresenter(),self::getGraficosModel(),self::getGraficosCreator());
+        return new GraficosController(self::getPresenter(), self::getGraficosModel(), self::getGraficosCreator());
     }
 
     private static function getDatabase()
