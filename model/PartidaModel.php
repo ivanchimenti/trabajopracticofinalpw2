@@ -27,7 +27,13 @@ class PartidaModel
             if ($pregunta === null) {
                 $pregunta = $this->fetchPreguntaByUser($username);
             }
+
         }
+
+        if ($pregunta !== null) {
+            $this->addToPreguntaMostrada($pregunta['id']);
+        }
+
         return $pregunta;
     }
 
@@ -91,6 +97,13 @@ class PartidaModel
         } else {
             return null;
         }
+    }
+
+    private function addToPreguntaMostrada($idPregunta)
+    {
+        $query = $this->database->prepare("UPDATE Pregunta SET cantEntregada = cantEntregada + 1 WHERE id = ?");
+        $query->bind_param("i", $idPregunta);
+        $query->execute();
     }
 
     public function getRespuestas($idPregunta)
