@@ -19,10 +19,6 @@ class PartidaController
     }
     public function get()
     {
-        //        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reload']) && $_POST['reload'] == 'true') {
-        //            return;
-        //        }
-
         $pregunta = $this->mostrarPregunta();
         $_SESSION['tiempoEnvio'] = new DateTime("now");
         $this->manageSessionPartida($pregunta["id"]);

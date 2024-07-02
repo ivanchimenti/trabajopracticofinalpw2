@@ -13,7 +13,7 @@
 
         {{^game_over}}
             <div class="partida-time">Tiempo restante: <span id="time"></span></div>
-            <h2 class="w3-wide partida-header">Pregunta</h2>
+            <img src="/public/categories/{{pregunta.categoria}}.webp" class="partida-category-img" alt="Categoria de la pregunta">
             <h1 class="partida-question">{{pregunta.contenido}}</h1>
             <h2 class="partida-answer-header">Respuestas:</h2>
             <form action="/partida/answer" method="post" class="partida-form">
