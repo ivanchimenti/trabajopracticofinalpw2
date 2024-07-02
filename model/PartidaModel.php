@@ -138,26 +138,49 @@ class PartidaModel
 
     public function addPreguntaRespondida($idPregunta, $idUsuario, $acierto)
     {
-
-        $query = $this->database->prepare("SELECT * FROM pregunta_respondida WHERE id_usuario LIKE ? AND id_pregunta = ?;");
-        $query->bind_param("si", $idUsuario, $idPregunta);
-        $query->execute();
-        $result = $query->get_result();
-
-        if($result->num_rows != 0) {
-            $this->deletePreguntasRespondidas($idUsuario);
-        }
-
         $query = $this->database->prepare("INSERT INTO pregunta_respondida (id_pregunta,id_usuario,acierto) VALUES (?,?,?);");
         $query->bind_param("isi", $idPregunta, $idUsuario, $acierto);
+
+        $this->addToPreguntaCantRespondida($idPregunta);
+        $this->updatePreguntaRank($idPregunta);
         return $query->execute();
     }
 
-    public function deletePreguntasRespondidas($idUsuario)
+
+    private function deletePreguntasRespondidas($idUsuario)
     {
         $query = $this->database->prepare("DELETE FROM pregunta_respondida WHERE id_usuario LIKE ?;");
         $query->bind_param("s", $idUsuario);
         $query->execute();
+    }
+
+    private function addToPreguntaCantRespondida($idPregunta)
+    {
+        $query = $this->database->prepare("UPDATE Pregunta SET cantRespondida = cantRespondida + 1 WHERE id = ?");
+        $query->bind_param("i", $idPregunta);
+        $query->execute();
+    }
+
+    private function updatePreguntaRank($idPregunta)
+    {
+        $query = $this->database->prepare("SELECT cantEntregada, cantRespondida FROM Pregunta WHERE id = ?");
+        $query->bind_param("i", $idPregunta);
+        $query->execute();
+        $result = $query->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            if ($row['cantEntregada'] != 0) {
+                $porcentajeAcertado = ($row['cantRespondida'] / $row['cantEntregada']) * 100;
+            } else {
+                $porcentajeAcertado = 0;
+            }
+
+            $updateQuery = $this->database->prepare("UPDATE Pregunta SET porcentajeAcertado = ? WHERE id = ?");
+            $updateQuery->bind_param("di", $porcentajeAcertado, $idPregunta);
+            $updateQuery->execute();
+        }
     }
 
     public function getPartidaActual($username)
