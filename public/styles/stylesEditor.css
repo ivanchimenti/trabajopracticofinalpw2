@@ -1,0 +1,279 @@
+/* Home */
+.questions-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0px 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.questions-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.questions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.questions-header {
+  background-color: #f2f2f2;
+}
+
+.question-row {
+  border-bottom: 1px solid #ddd;
+}
+
+.question-col,
+.status-col,
+.actions-col {
+  padding: 10px;
+  text-align: left;
+}
+
+.question-actions {
+  white-space: nowrap;
+}
+
+.add-question-button {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+}
+.add-question-button a {
+  text-decoration: none;
+}
+
+/* manageQuestion */
+
+.manageQuestion-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.manageQuestion-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.manageQuestion-form {
+  margin-top: 20px;
+}
+
+.manageQuestion-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.manageQuestion-form input[type="text"],
+.manageQuestion-form select,
+.manageQuestion-form input[type="radio"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.manageQuestion-form select {
+  margin-bottom: 20px;
+}
+
+.manageQuestion-form table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.manageQuestion-form th,
+.manageQuestion-form td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.manageQuestion-form th {
+  background-color: #f2f2f2;
+}
+
+.manageQuestion-form .w3-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.manageQuestion-form .w3-button:hover {
+  background-color: #45a049;
+}
+
+/*suggestion*/
+
+.suggestion-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.suggestion-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.suggestion-header {
+  background-color: #f2f2f2;
+}
+
+.suggestion-row {
+  border-bottom: 1px solid #ddd;
+}
+
+.suggestion-col {
+  padding: 10px;
+  text-align: left;
+}
+
+.suggestion-col a {
+  text-decoration: none;
+  text-transform: capitalize;
+  color: blue;
+}
+
+.suggestion-actions {
+  white-space: nowrap;
+}
+
+.suggestion-actions .w3-button {
+  margin-right: 10px;
+}
+
+/* manageSuggestion */
+
+.manageSuggestion-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.manageSuggestion-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.manageSuggestion-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.manageSuggestion-form input[type="text"],
+.manageSuggestion-form select,
+.manageSuggestion-form input[type="radio"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.manageSuggestion-form select {
+  margin-bottom: 20px;
+}
+
+.manageSuggestion-form table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.manageSuggestion-form th,
+.manageSuggestion-form td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.manageSuggestion-form th {
+  background-color: #f2f2f2;
+}
+
+.manageSuggestion-form .w3-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.manageSuggestion-form .w3-button:hover {
+  background-color: #45a049;
+}
+
+/* reports */
+
+.reports-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.reports-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reports-header {
+  background-color: #f2f2f2;
+}
+
+.reports-row {
+  border-bottom: 1px solid #ddd;
+}
+
+.reports-col {
+  padding: 10px;
+  text-align: left;
+}
+
+.reports-actions {
+  white-space: nowrap;
+}
+
+.reports-actions .w3-button {
+  margin-right: 10px;
+}

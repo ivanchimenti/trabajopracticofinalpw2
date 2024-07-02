@@ -4,31 +4,31 @@
     <title>Editor</title>
 </head>
 <body>
-    <div class="w3-container">
-    <h1>Lista de Preguntas</h1>
-    <table class="w3-table-all">
-        <thead>
-            <tr class="w3-light-grey">
-                <th>Pregunta</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+    <div class="questions-container">
+        <h1 class="questions-title">Lista de Preguntas</h1>
+        <table class="w3-table-all questions-table">
+            <thead>
+                <tr class="w3-light-grey questions-header">
+                    <th class="question-col">Pregunta</th>
+                    <th class="status-col">Estado</th>
+                    <th class="actions-col">Acciones</th>
+                </tr>
+            </thead>
+            {{#questions}}
+            <tr class="question-row">
+                <td class="question-content">{{contenido}}</td>
+                <td class="question-status">{{#estado}}Activa{{/estado}}{{^estado}}Inactiva{{/estado}}</td>
+                <td class="question-actions">
+                    <a href="/editor/toggleQuestionState/id={{id}}" class="action-toggle w3-button w3-green">{{#estado}}Desactivar{{/estado}}{{^estado}}Activar{{/estado}}</a>
+                    <a href="/editor/manageQuestionView/id={{id}}" class="action-edit w3-button w3-blue">Editar</a>
+                    <a href="/editor/deleteQuestion/id={{id}}" class="action-delete w3-button w3-red" onclick="return confirm('¿Estás seguro de borrar esta pregunta?')">Borrar</a>
+                </td>
             </tr>
-        </thead>
-        {{#questions}}
-        <tr>
-            <td>{{contenido}}</td>
-            <td>{{#estado}}Activa{{/estado}}{{^estado}}Inactiva{{/estado}}</td>
-            <td>
-                <a href="/editor/toggleQuestionState/id={{id}}" class="w3-button w3-green">{{#estado}}Desactivar{{/estado}}{{^estado}}Activar{{/estado}}</a>
-                <a href="/editor/manageQuestionView/id={{id}}" class="w3-button w3-blue">Editar</a>
-                <a href="/editor/deleteQuestion/id={{id}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de borrar esta pregunta?')">Borrar</a>
-            </td>
-        </tr>
-        {{/questions}}
-    </table>
-    <div class="w3-margin-top"> 
-    <a href="/editor/manageQuestionView" class="w3-button w3-green">Agregar Nueva Pregunta</a>
-    </div>
+            {{/questions}}
+        </table>
+        <div class="add-question-button w3-button w3-green">
+            <a href="/editor/manageQuestionView" class="btn-green">Agregar Nueva Pregunta</a>
+        </div>
     </div>
 </body>
 </html>

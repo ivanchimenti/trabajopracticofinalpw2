@@ -4,21 +4,21 @@
     <title>Reports</title>
 </head>
 <body>
-    <div class="w3-container">
-        <h1>Lista de Reportes</h1>
-        <table class="w3-table-all">
+    <div class="reports-container">
+        <h1 class="reports-title">Lista de Reportes</h1>
+        <table class="w3-table-all reports-table">
             <thead>
-                <tr class="w3-light-grey">
-                    <th>Pregunta</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                <tr class="w3-light-grey reports-header">
+                    <th class="reports-col">Pregunta</th>
+                    <th class="reports-col">Estado</th>
+                    <th class="reports-col">Acciones</th>
                 </tr>
             </thead>
             {{#reports}}
-            <tr>
-                <td>{{contenido}}</td>
-                <td>{{#estado}}Inactiva{{/estado}}{{^estado}}Activa{{/estado}}</td>
-                <td>
+            <tr class="reports-row">
+                <td class="reports-col">{{contenido}}</td>
+                <td class="reports-col">{{#estado}}Inactiva{{/estado}}{{^estado}}Activa{{/estado}}</td>
+                <td class="reports-actions">
                     <a href="/editor/manageQuestionView/id={{id_pregunta}}" class="w3-button w3-blue">Editar</a>
                     <a href="/editor/deleteQuestion/id={{id_pregunta}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de borrar esta pregunta?')">Borrar</a>
                 </td>

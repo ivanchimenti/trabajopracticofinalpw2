@@ -4,34 +4,37 @@
     <title>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</title>
 </head>
 <body>
-    <h1>{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</h1>
-    <form action="{{#pregunta}}/editor/manageQuestion/id={{pregunta.id}}{{/pregunta}}{{^pregunta}}/editor/manageQuestion{{/pregunta}}" method="post">
-        <label for="pregunta">Ingrese pregunta:</label>
-        <input type="text" id="pregunta" name="pregunta" value="{{pregunta.contenido}}" required>
-        <label for="categoria">Seleccione una categoria:</label>
-        <select id="categoria" name="categoria">
-        <option value="1">Artes</option>
-        <option value="2">Ciencia</option>
-        <option value="3">Deportes</option>
-        <option value="4">Entretenimiento</option> 
-        <option value="5">Geografia</option>
-        <option value="6">Historia</option>
-        </select><br><br>
-        
-        <table class="w3-table-all">
-            <tr>
-                <th>Respuesta</th>
-                <th>Correcta</th>
-            </tr>
-            {{#respuestas}}
-            <tr>
-                <td><input type="text" name="respuestas[{{index}}][contenido]" value="{{contenido}}" required></td>
-                <td><input type="radio" name="correcta" value="{{index}}" {{#correcta}}checked{{/correcta}} required></td>
-            </tr>
-            {{/respuestas}}
-        </table>
-        
-        <input type="submit" class="w3-button w3-green w3-margin-top" value="{{#pregunta}}Actualizar Pregunta{{/pregunta}}{{^pregunta}}Agregar Pregunta{{/pregunta}}" class="submit-button">
-    </form>
+    <div class="manageQuestion-container">
+        <h1 class="manageQuestion-title">{{#pregunta}}Editar Pregunta{{/pregunta}}{{^pregunta}}Agregar Nueva Pregunta{{/pregunta}}</h1>
+        <form action="{{#pregunta}}/editor/manageQuestion/id={{pregunta.id}}{{/pregunta}}{{^pregunta}}/editor/manageQuestion{{/pregunta}}" method="post" class="manageQuestion-form">
+            <label for="pregunta">Ingrese pregunta:</label>
+            <input type="text" id="pregunta" name="pregunta" value="{{pregunta.contenido}}" required>
+            
+            <label for="categoria">Seleccione una categoría:</label>
+            <select id="categoria" name="categoria">
+                <option value="1">Artes</option>
+                <option value="2">Ciencia</option>
+                <option value="3">Deportes</option>
+                <option value="4">Entretenimiento</option>
+                <option value="5">Geografía</option>
+                <option value="6">Historia</option>
+            </select>
+            
+            <table class="w3-table-all">
+                <tr>
+                    <th>Respuesta</th>
+                    <th>Correcta</th>
+                </tr>
+                {{#respuestas}}
+                <tr>
+                    <td><input type="text" name="respuestas[{{index}}][contenido]" value="{{contenido}}" required></td>
+                    <td><input type="radio" name="correcta" value="{{index}}" {{#correcta}}checked{{/correcta}} required></td>
+                </tr>
+                {{/respuestas}}
+            </table>
+            
+            <input type="submit" class="w3-button w3-green w3-margin-top" value="{{#pregunta}}Actualizar Pregunta{{/pregunta}}{{^pregunta}}Agregar Pregunta{{/pregunta}}">
+        </form>
+    </div>
 </body>
 </html>

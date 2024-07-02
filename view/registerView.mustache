@@ -4,25 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        .register-container {
-            max-width: 600px;
-            margin: 60px auto;
-            padding: 20px;
-        }
-        .error-message {
-            color: red;
-        }
-        .success-message {
-            color: green;
-        }
-        #map {
-            width: 100%;
-            height: 400px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="w3-container w3-card-4 register-container">
@@ -74,7 +55,7 @@
             <input class="w3-input w3-border" type="file" id="profile_picture" name="profile_picture" accept="image/*" required>
             <br>
 
-            <div id="map"></div>
+            <div id="map" class="register-map"></div>
             <input type="hidden" id="latitude" name="latitude" value="">
             <input type="hidden" id="longitude" name="longitude" value="">
 

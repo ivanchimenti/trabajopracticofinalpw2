@@ -4,22 +4,22 @@
     <title>Sugerencias</title>
 </head>
 <body>
-    <div class="w3-container">
-        <h1>Preguntas Sugeridas</h1>
-        <table class="w3-table-all">
+    <div class="suggestion-container">
+        <h1 class="suggestion-title">Preguntas Sugeridas</h1>
+        <table class="w3-table-all suggestion-table">
             <thead>
-                <tr class="w3-light-grey">
-                    <th>Pregunta</th>
-                    <th>Usuario</th>
-                    <th>Acciones</th>
+                <tr class="w3-light-grey suggestion-header">
+                    <th class="suggestion-col">Pregunta</th>
+                    <th class="suggestion-col">Usuario</th>
+                    <th class="suggestion-col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {{#suggestions}}
-                <tr>
-                    <td>{{contenido}}</td>
-                    <td>{{username}}</td>
-                    <td>
+                <tr class="suggestion-row">
+                    <td class="suggestion-col">{{contenido}}</td>
+                    <td class="suggestion-col"><a href="/user/profile/username={{username}}">{{username}}</a></td>
+                    <td class="suggestion-actions">
                         <a href="/editor/manageSuggestionView/id={{id}}" class="w3-button w3-blue w3-margin-right">Editar</a>
                         <a href="/editor/rejectSuggestion/id={{id}}" class="w3-button w3-red" onclick="return confirm('¿Estás seguro de rechazar esta sugerencia?')">Rechazar</a>
                     </td>

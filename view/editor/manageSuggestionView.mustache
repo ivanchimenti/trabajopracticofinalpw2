@@ -4,11 +4,12 @@
     <title>Crear Pregunta a partir de Sugerencia</title>
 </head>
 <body>
-    <div class="w3-container">
-        <h1>Crear Pregunta a partir de Sugerencia</h1>
-        <form action="/editor/acceptSuggestion?id={{suggestion.id}}" method="post">
+    <div class="manageSuggestion-container">
+        <h1 class="manageSuggestion-title">Crear Pregunta a partir de Sugerencia</h1>
+        <form action="/editor/acceptSuggestion?id={{suggestion.id}}" method="post" class="manageSuggestion-form">
             <label for="pregunta">Ingrese pregunta:</label>
             <input type="text" id="pregunta" name="pregunta" value="{{suggestion.contenido}}" required>
+            
             <label for="categoria">Seleccione una categoría:</label>
             <select id="categoria" name="categoria">
                 <option value="1">Artes</option>
@@ -17,8 +18,8 @@
                 <option value="4">Entretenimiento</option>
                 <option value="5">Geografía</option>
                 <option value="6">Historia</option>
-            </select><br><br>
-
+            </select>
+            
             <table class="w3-table-all">
                 <thead>
                     <tr>
@@ -45,7 +46,7 @@
                     </tr>
                 </tbody>
             </table>
-
+            
             <input type="submit" class="w3-button w3-green w3-margin-top" value="Agregar Pregunta">
         </form>
     </div>
