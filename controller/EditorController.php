@@ -46,6 +46,7 @@ class EditorController
         if ($idPregunta) {
             $data['pregunta'] = $this->model->getQuestionById($idPregunta);
             $data['respuestas'] = $this->model->getAnswers($idPregunta);
+            $data['categoriaSeleccionada'] = $data['pregunta']['categoria'];
         } else {
             $data['respuestas'] = [
                 ['index' => 0, 'contenido' => '', 'correcta' => 0],
@@ -53,6 +54,7 @@ class EditorController
                 ['index' => 2, 'contenido' => '', 'correcta' => 0],
                 ['index' => 3, 'contenido' => '', 'correcta' => 0],
             ];
+            $data['categoriaSeleccionada'] = 4;
         }
 
         $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
