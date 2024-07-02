@@ -28,6 +28,7 @@ class EditorController
     {
         $id = $_GET['id'];
         $this->model->toggleQuestionState($id);
+
         redirect('/editor');
     }
 
@@ -35,6 +36,7 @@ class EditorController
     {
         $idPregunta = $_GET['id'];
         $this->model->deleteQuestion($idPregunta);
+
         redirect('/editor');
     }
 
@@ -54,7 +56,7 @@ class EditorController
                 ['index' => 2, 'contenido' => '', 'correcta' => 0],
                 ['index' => 3, 'contenido' => '', 'correcta' => 0],
             ];
-            $data['categoriaSeleccionada'] = 4;
+            $data['categoriaSeleccionada'] = 1;
         }
 
         $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
@@ -79,7 +81,6 @@ class EditorController
         }
 
         redirect('/editor');
-
     }
 
     public function suggestionsView()
@@ -93,8 +94,8 @@ class EditorController
     {
         $idSugerencia = $_GET['id'];
         $this->model->rejectSuggestion($idSugerencia);
-        redirect('/editor/suggestionsView');
 
+        redirect('/editor/suggestionsView');
     }
 
     public function manageSuggestionView()
