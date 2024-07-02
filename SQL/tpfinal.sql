@@ -13,7 +13,9 @@ CREATE TABLE `user` (
                         `longitude` int(11) NOT NULL,
                         `email` varchar(255) NOT NULL,
                         `profile_picture` varchar(255) NOT NULL,
-                        `role` varchar(1)
+                        `role` varchar(1),
+                        `cantEntregada` int(11) NOT NULL,
+                        `cantRespondida` int(11) NOT NULL,
 );
 
 ALTER TABLE `user`

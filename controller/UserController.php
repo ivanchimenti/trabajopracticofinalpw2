@@ -64,6 +64,9 @@ class UserController
     public function lobby()
     {
         $user = $_SESSION['user'];
+
+        $puntaje_total = $this->getScore();
+
         $data = [
             'full_name' => $user['full_name'],
             'birth_year' => $user['birth_year'],
@@ -72,12 +75,16 @@ class UserController
             'longitude' => $user['longitude'],
             'email' => $user['email'],
             'username' => $user['username'],
-            'profile_picture' => $user['profile_picture']
+            'profile_picture' => $user['profile_picture'],
+            'puntaje_total' => $puntaje_total
         ];
 
         $this->presenter->render("view/player/lobbyView.mustache", $data);
     }
-
+    private function getScore(){
+        $username = $_SESSION['user']['username'];
+       return $this->model->getScore($username);
+    }
     public function profile()
     {
         if (isset($_GET['username'])) {
@@ -86,7 +93,6 @@ class UserController
         } else {
             $user = $_SESSION['user'];
         }
-
 
         $profileLink = "http://localhost/user/profile/username=" . $user['username'];
         $qrCodeFile = 'public/qrcodes/' . $user['username'] . '.png';
@@ -102,7 +108,7 @@ class UserController
             'username' => $user['username'],
             'profile_picture' => $user['profile_picture'],
             'qrCodeFile' => $qrCodeFile,
-            'apiKey' => $this->apiKey
+            'apiKey' => $this->apiKey,
         ];
         $this->presenter->render("view/player/profileView.mustache", $data);
     }

@@ -99,4 +99,10 @@ class PartidaController
 
         return $pregunta;
     }
+
+//    private function getUserRank(){
+//    $username = $_SESSION['user']['username']
+//        $rank = $this->model->getRank($username);
+//        return $rank;
+//    }
 }
