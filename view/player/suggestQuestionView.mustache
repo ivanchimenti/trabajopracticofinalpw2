@@ -1,13 +1,15 @@
-<form action="/user/suggest" method="POST">
-    <label for="question">Sugeri una pregunta:</label>
-    <input type="text" id="question" name="question" required>
-    <button class="w3-button w3-green" type="submit">Enviar</button>
-</form>
+    <div class="suggestion-container">
+        <form action="/user/suggest" method="POST" class="suggestion-form">
+            <label for="question" class="suggestion-label">Sugeri una pregunta:</label>
+            <input type="text" id="question" name="question" class="suggestion-input" required>
+            <button class="suggestion-button" type="submit">Enviar</button>
+        </form>
 
-{{#success}}
-    <p class="w3-green">{{success}}</p>
-{{/success}}
+        {{#success}}
+            <p class="suggestion-success">{{success}}</p>
+        {{/success}}
 
-{{#error}}
-    <p class="w3-red">{{error}}</p>
-{{/error}}
+        {{#error}}
+            <p class="suggestion-error">{{error}}</p>
+        {{/error}}
+    </div>

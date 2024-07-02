@@ -5,38 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Usuario</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        #map {
-            width: 75%;
-            height: 400px;
-            margin: 20px 0;
-        }
-        #qrcode {
-            width: 100px;
-            height: 100px;
-            margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
-    <div class="w3-container w3-card w3-margin w3-padding">
-        <h2>Perfil del Usuario</h2>
-        <p><strong>Nombre de Usuario:</strong> {{username}}</p>
-
-        <img src="{{profile_picture}}" alt="Foto de Perfil" class="w3-circle" style="width:100px;height:100px;">
-
-        <p><strong>Nombre Completo:</strong> {{full_name}}</p>
-
-        <p><strong>Año de Nacimiento:</strong> {{birth_year}}</p>
-
-        <p><strong>Sexo:</strong> {{gender}}</p>
-
-        <p><strong>Correo Electrónico:</strong> {{email}}</p>
-        <p><strong>Ubicación:</strong></p>
-        <div id="map"></div>
-        <div>
-        <img id="qrcode" src="/{{ qrCodeFile }}" alt="QR Code for Profile Link">
+    <div class="w3-container w3-card w3-margin w3-padding profile-container">
+        <h2 class="profile-title">Perfil del Usuario</h2>
+        <div class="profile-content">
+            <div class="profile-info">
+                <p><strong>Nombre de Usuario:</strong> {{username}}</p>
+                <p><strong>Nombre Completo:</strong> {{full_name}}</p>
+                <p><strong>Año de Nacimiento:</strong> {{birth_year}}</p>
+                <p><strong>Sexo:</strong> {{gender}}</p>
+                <p><strong>Correo Electrónico:</strong> {{email}}</p>
+            </div>
+            <div class="profile-images">
+                <img src="{{profile_picture}}" alt="Foto de Perfil" class="w3-circle profile-picture">
+                <img id="qrcode" src="/{{ qrCodeFile }}" alt="QR Code for Profile Link" class="profile-qrcode">
+            </div>
         </div>
+        <p><strong>Ubicación:</strong></p>
+        <div id="map" class="profile-map"></div>
         <a href="/user/lobby" class="w3-button w3-green">Volver</a>
     </div>
 

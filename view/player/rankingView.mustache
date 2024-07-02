@@ -6,26 +6,27 @@
     <title>Ranking de Usuarios</title>
 </head>
 <body>
-    <div class="w3-container w3-card w3-margin w3-padding">
+    <div class="ranking-container">
         <h1>Ranking de Usuarios</h1>
-        <table>
+        <table class="ranking-table">
             <thead>
-            <tr>
-                <th>Posición</th>
-                <th>Usuario</th>
-                <th>Puntaje</th>
-            </tr>
+                <tr>
+                    <th class="ranking-pos">Posición</th>
+                    <th class="ranking-username">Usuario</th>
+                    <th class="ranking-score">Puntaje</th>
+                </tr>
             </thead>
             <tbody>
-            {{#ranking}}
-                <tr>
-                    <td>{{posicion}}</td>
-                    <td><a href="/user/profile/username={{username}}">{{username}}</a></td>
-                    <td>{{puntuacion}}</td>
-                </tr>
-            {{/ranking}}
+                {{#ranking}}
+                    <tr>
+                        <td>{{posicion}}</td>
+                        <td><a href="/user/profile/username={{username}}" class="ranking-username">{{username}}</a></td>
+                        <td class="ranking-score">{{puntuacion}}</td>
+                    </tr>
+                {{/ranking}}
             </tbody>
         </table>
     </div>
 </body>
 </html>
+

@@ -1,3 +1,5 @@
 /config/
-/public/
+/public/profile_pictures/*
+/public/qrcodes/*
+/public/graficos/*
 
