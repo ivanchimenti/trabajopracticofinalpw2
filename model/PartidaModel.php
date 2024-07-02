@@ -34,6 +34,7 @@ class PartidaModel
             $this->addToPreguntaMostrada($pregunta['id']);
         }
 
+        $this->addToUserCantEntregada($username);
         return $pregunta;
     }
 
@@ -143,6 +144,8 @@ class PartidaModel
 
         $this->addToPreguntaCantRespondida($idPregunta);
         $this->updatePreguntaRank($idPregunta);
+        $this->addToUserCantRespondida($idUsuario);
+
         return $query->execute();
     }
 
@@ -181,6 +184,20 @@ class PartidaModel
             $updateQuery->bind_param("di", $porcentajeAcertado, $idPregunta);
             $updateQuery->execute();
         }
+    }
+
+    private function addToUserCantRespondida($idUsuario)
+    {
+        $query = $this->database->prepare("UPDATE user SET cantRespondida = cantRespondida + 1 WHERE username = ?");
+        $query->bind_param("s", $idUsuario);
+        $query->execute();
+    }
+
+    private function addToUserCantEntregada($idUsuario)
+    {
+        $query = $this->database->prepare("UPDATE user SET cantEntregada = cantEntregada + 1 WHERE username = ?");
+        $query->bind_param("s", $idUsuario);
+        $query->execute();
     }
 
     public function getPartidaActual($username)
