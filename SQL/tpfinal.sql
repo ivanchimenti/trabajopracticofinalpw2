@@ -27,7 +27,7 @@ create table Pregunta(
                          contenido TEXT NOT NULL,
                          cantEntregada INT NOT NULL,
                          cantRespondida INT NOT NULL,
-                         dificultad VARCHAR(50) NOT NULL,
+                         porcentajeAcertado INT NOT NULL,
                          estado TINYINT(1) NOT NULL,
                          primary key(id)
 );

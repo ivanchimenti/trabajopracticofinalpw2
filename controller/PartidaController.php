@@ -19,9 +19,9 @@ class PartidaController
     }
     public function get()
     {
-//        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reload']) && $_POST['reload'] == 'true') {
-//            return;
-//        }
+        //        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reload']) && $_POST['reload'] == 'true') {
+        //            return;
+        //        }
 
         $pregunta = $this->mostrarPregunta();
         $_SESSION['tiempoEnvio'] = new DateTime("now");
@@ -30,9 +30,9 @@ class PartidaController
 
     private function manageSessionPartida($preguntaId)
     {
-        if (!isset($_SESSION['partida']))
+        if (!isset($_SESSION['partida'])) {
             $_SESSION['partida'] = $this->model->addPartida($_SESSION['user']['username'], $preguntaId, $_SESSION['puntuacion']);
-        else{
+        } else {
             $this->model->updatePartida($_SESSION['partida']['id'], $preguntaId, $_SESSION['puntuacion']);
         }
     }
@@ -46,7 +46,7 @@ class PartidaController
     {
         $tiempoActual = new DateTime("now");
         $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio']->getTimestamp();
-        if($timer > 30){
+        if($timer > 30) {
             $_SESSION['game_over'] = true;
             unset($_SESSION['partida']);
             unset($_SESSION['puntuacion']);
@@ -99,10 +99,4 @@ class PartidaController
 
         return $pregunta;
     }
-
-//    private function getUserRank(){
-//    $username = $_SESSION['user']['username']
-//        $rank = $this->model->getRank($username);
-//        return $rank;
-//    }
 }

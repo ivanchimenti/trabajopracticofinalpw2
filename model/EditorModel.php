@@ -57,7 +57,7 @@ class EditorModel
 
     public function addQuestion($categoria, $pregunta, $respuestas)
     {
-        $query = $this->database->prepare("INSERT INTO Pregunta (categoria, contenido, estado,cantEntregada,cantRespondida) VALUES (?, ?, ?,100,50)");
+        $query = $this->database->prepare("INSERT INTO Pregunta (categoria, contenido, estado,cantEntregada, cantRespondida, porcentajeAcertado) VALUES (?, ?, ?, 100, 50, 50)");
         $estado = 1;
         $query->bind_param("ssi", $categoria, $pregunta, $estado);
         $query->execute();
