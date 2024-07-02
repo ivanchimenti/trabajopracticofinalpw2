@@ -18,7 +18,7 @@ class UserController
     public function get()
     {
         $data = [];
-        $this->presenter->render("view/loginView.mustache", $data);
+        $this->presenter->render("view/template/loginView.mustache", $data);
     }
 
     public function suggestView()
@@ -58,7 +58,7 @@ class UserController
         $data = [
             'apiKey' => $this->apiKey
         ];
-        $this->presenter->render("view/registerView.mustache", $data);
+        $this->presenter->render("view/template/registerView.mustache", $data);
     }
 
     public function lobby()
@@ -159,7 +159,7 @@ class UserController
             exit();
         } else {
             $data['error'] = 'Usuario o contraseña incorrectos';
-            $this->presenter->render("view/loginView.mustache", $data);
+            $this->presenter->render("view/template/loginView.mustache", $data);
         }
     }
 
@@ -186,7 +186,7 @@ class UserController
 
         if ($password != $confirmPassword) {
             $data['error'] = 'Las contraseñas no coinciden.';
-            $this->presenter->render("view/registerView.mustache", $data);
+            $this->presenter->render("view/template/registerView.mustache", $data);
             return;
         }
 
@@ -206,14 +206,14 @@ class UserController
         } else {
             $data['error'] = 'Error en el registro del usuario.';
         }
-        $this->presenter->render("view/registerView.mustache", $data);
+        $this->presenter->render("view/template/registerView.mustache", $data);
     }
 
     public function activate()
     {
         if (!isset($_GET['token'])) {
             $data = ['error' => 'Token de activación no proporcionado.'];
-            $this->presenter->render("view/loginView.mustache", $data);
+            $this->presenter->render("view/template/loginView.mustache", $data);
             return;
         }
 
@@ -225,7 +225,7 @@ class UserController
         } else {
             $data['error'] = 'Token de activación inválido o la cuenta ya ha sido activada.';
         }
-        $this->presenter->render("view/loginView.mustache", $data);
+        $this->presenter->render("view/template/loginView.mustache", $data);
     }
 
     private function uploadProfilePicture($file)
