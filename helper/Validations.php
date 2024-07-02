@@ -33,4 +33,20 @@ function validateSession($controller, $action)
         }
     }
 
+    if($controller == "admin" && !isset($_SESSION['user'])) {
+        redirect("/user/errorView");
+    }
+
+    if($controller == "editor" && !isset($_SESSION['user'])) {
+        redirect("/user/errorView");
+    }
+
+    if($controller == "pdfCreator" && !isset($_SESSION['user'])) {
+        redirect("/user/errorView");
+    }
+
+    if($controller == "graficos" && !isset($_SESSION['user'])) {
+        redirect("/user/errorView");
+    }
+
 }
