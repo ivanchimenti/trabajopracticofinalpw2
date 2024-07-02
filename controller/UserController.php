@@ -63,7 +63,9 @@ class UserController
 
     public function lobby()
     {
-        $user = $_SESSION['user'];
+        $username = $_SESSION['user']['username'];
+        $user = $this->model->getUserByUsername($username);
+        $_SESSION['user'] = $user;
 
         $puntaje_total = $this->getScore();
 
@@ -81,10 +83,13 @@ class UserController
 
         $this->presenter->render("view/player/lobbyView.mustache", $data);
     }
-    private function getScore(){
+
+    private function getScore()
+    {
         $username = $_SESSION['user']['username'];
-       return $this->model->getScore($username);
+        return $this->model->getScore($username);
     }
+
     public function profile()
     {
         if (isset($_GET['username'])) {
@@ -120,9 +125,10 @@ class UserController
         QRcode::png($text, $file, QR_ECLEVEL_L, 10);
     }
 
-    public function errorView(){
+    public function errorView()
+    {
         $data = [];
-        $this->presenter->render("view/template/accessDeniedView.mustache",$data);
+        $this->presenter->render("view/template/accessDeniedView.mustache", $data);
     }
 
     public function login()
@@ -137,7 +143,7 @@ class UserController
         if ($user !== null) {
             $_SESSION['user'] = $user;
 
-            switch($_SESSION['user']['role']){
+            switch($_SESSION['user']['role']) {
                 case 'a':
                     $role = 'admin';
                     break;
