@@ -2,7 +2,9 @@ Vista admin
 <a href="/admin/logout" class="w3-button w3-green">Logout</a>
 
 {{#data}}
-    <a href="/pdfCreator/create?data={{ jugador.imagen_grafico }}" class="w3-button w3-green">Generar pdf</a>
+    <a href="/pdfCreator/create?data={{ jugador.imagen_grafico }}" class="w3-button w3-green">Generar pdf1</a>
+    <a href="/pdfCreator/create?data={{ genero.imagen_grafico }}" class="w3-button w3-green">Generar pdf2</a>
+
     img: <img src="/public/graficos/{{ jugador.imagen_grafico }}" alt="img" width="500px" height="500px">
     img: <img src="/public/graficos/{{ genero.imagen_grafico }}" alt="img" width="500px" height="500px">
 {{/data}}
