@@ -20,6 +20,8 @@ class PartidaController
 
     public function get()
     {
+
+        $_SESSION['game_over'] = false;
         $pregunta = $this->mostrarPregunta();
         $this->manageSessionPartida($pregunta["id"]);
     }
@@ -48,12 +50,6 @@ class PartidaController
         } else {
             $this->presenter->render("view/player/partidaView.mustache", ["error" => "Respuesta no válida."]);
         }
-    }
-
-    public function reset()
-    {
-        $_SESSION['game_over'] = false;
-        redirect("/partida/get");
     }
 
     public function end()
