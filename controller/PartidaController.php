@@ -94,7 +94,6 @@ class PartidaController
                 $this->model->updatePartida($_SESSION['partida']['id'], 0, $_SESSION['puntuacion']);
                 redirect("/partida/get");
             } else {
-                $this->model->endPartida($_SESSION['partida']['id']);
                 $this->gameOver();
                 $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true]);
             }
@@ -118,9 +117,11 @@ class PartidaController
     private function gameOver()
     {
         $_SESSION['game_over'] = true;
+        $this->model->endPartida($_SESSION['partida']['id']);
         unset($_SESSION['partida']);
         unset($_SESSION['puntuacion']);
         unset($_SESSION['tiempoEnvio']);
+
     }
 
     private function randomizeRespuestas($respuestas)
