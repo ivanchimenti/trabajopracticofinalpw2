@@ -16,6 +16,7 @@ CREATE TABLE `user` (
                         `role` varchar(1),
                         `cantEntregada` int(11) NOT NULL,
                         `cantRespondida` int(11) NOT NULL,
+                        `fecha_ingreso` datetime NOT NULL DEFAULT NOW(),
 );
 
 ALTER TABLE `user`

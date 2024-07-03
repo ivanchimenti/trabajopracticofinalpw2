@@ -8,4 +8,5 @@ class AdminModel
     {
         $this->database = $database;
     }
+
 }
