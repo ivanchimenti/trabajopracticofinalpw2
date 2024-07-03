@@ -24,6 +24,44 @@ class PartidaController
         $this->manageSessionPartida($pregunta["id"]);
     }
 
+    public function answer()
+    {
+        $this->checkTimer();
+
+        $respuestaId = $_POST['respuesta_id'];
+        $respuesta = $this->model->getRespuesta($respuestaId);
+        $user = $_SESSION['user'];
+
+        if ($respuesta) {
+            $correcta = $respuesta['correcta'] == 1;
+            $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username'], $correcta);
+            if ($correcta) {
+                $tiempoActual = new DateTime();
+                $_SESSION['tiempoEnvio'] = $tiempoActual->getTimestamp();
+                $_SESSION['puntuacion'] += 1;
+                $this->model->updatePartida($_SESSION['partida']['id'], 0, $_SESSION['puntuacion']);
+                redirect("/partida/get");
+            } else {
+                $this->gameOver();
+                $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true]);
+            }
+        } else {
+            $this->presenter->render("view/player/partidaView.mustache", ["error" => "Respuesta no válida."]);
+        }
+    }
+
+    public function reset()
+    {
+        $_SESSION['game_over'] = false;
+        redirect("/partida/get");
+    }
+
+    public function end()
+    {
+        $this->gameOver();
+        $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $_SESSION['tiempoEnvio']]);
+    }
+
     private function mostrarPregunta()
     {
         $tiempoActual = new DateTime();
@@ -71,51 +109,6 @@ class PartidaController
         $this->presenter->render("view/player/partidaView.mustache", ["pregunta" => $pregunta, "respuestas" => $respuestas, "tiempoEnvio" => $tiempoEnvio]);
     }
 
-    public function answer()
-    {
-        $tiempoActual = new DateTime();
-        $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio'];
-
-        if ($timer > 30) {
-            $this->gameOver();
-            $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $timer]);
-            return;
-        }
-
-        $respuestaId = $_POST['respuesta_id'];
-        $respuesta = $this->model->getRespuesta($respuestaId);
-        $user = $_SESSION['user'];
-
-        if ($respuesta) {
-            $correcta = $respuesta['correcta'] == 1;
-            $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username'], $correcta);
-            if ($correcta) {
-                $tiempoActual = new DateTime();
-                $_SESSION['tiempoEnvio'] = $tiempoActual->getTimestamp();
-                $_SESSION['puntuacion'] += 1;
-                $this->model->updatePartida($_SESSION['partida']['id'], 0, $_SESSION['puntuacion']);
-                redirect("/partida/get");
-            } else {
-                $this->gameOver();
-                $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true]);
-            }
-        } else {
-            $this->presenter->render("view/player/partidaView.mustache", ["error" => "Respuesta no válida."]);
-        }
-    }
-
-    public function reset()
-    {
-        $_SESSION['game_over'] = false;
-        redirect("/partida/get");
-    }
-
-    public function end()
-    {
-        $this->gameOver();
-        $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $_SESSION['tiempoEnvio']]);
-    }
-
     private function gameOver()
     {
         $_SESSION['game_over'] = true;
@@ -142,5 +135,19 @@ class PartidaController
         }
 
         return $pregunta && $respuestas ? [$pregunta, $respuestas] : null;
+    }
+
+    private function checkTimer()
+    {
+
+        $tiempoActual = new DateTime();
+        $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio'];
+
+        if ($timer > 30) {
+            $this->gameOver();
+            $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $timer]);
+            return;
+        }
+
     }
 }

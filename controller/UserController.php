@@ -131,13 +131,19 @@ class UserController
     public function errorView()
     {
         $error = $_GET['error'];
-        if($error == 404) {
-            $data = ['error' => "Usuario no encontrado"];
+
+        switch ($error) {
+            case 404:
+                $data = ['error' => "Usuario no encontrado"];
+                break;
+            case 403:
+                $data = ['error' => "Acceso denegado"];
+                break;
+            default:
+                $data = ['error' => "Error"];
+                break;
         }
 
-        if($error == 403) {
-            $data = ['error' => "Acceso denegado"];
-        }
 
         $this->presenter->render("view/template/accessDeniedView.mustache", $data);
     }
