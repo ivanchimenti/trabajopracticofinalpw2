@@ -62,6 +62,24 @@ class PartidaController
         $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $_SESSION['tiempoEnvio']]);
     }
 
+    public function reportQuestion()
+    {
+        $questionId = $_GET['questionId'];
+        $username = $_SESSION['user']['username'];
+        $data = [];
+
+        if($this->model->reportQuestion($questionId, $username)) {
+            $this->gameOver();
+            redirect('/partida/questionReported');
+        }
+    }
+
+    public function questionReported()
+    {
+        $data = [];
+        $this->presenter->render("view/player/questionReportedView.mustache", $data);
+    }
+
     private function mostrarPregunta()
     {
         $tiempoActual = new DateTime();

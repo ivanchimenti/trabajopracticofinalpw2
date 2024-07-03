@@ -9,6 +9,13 @@ class PartidaModel
         $this->database = $database;
     }
 
+    public function reportQuestion($questionId, $username)
+    {
+        $query = $this->database->prepare("INSERT INTO reporte (id_pregunta, username) VALUES (?, ?)");
+        $query->bind_param("is", $questionId, $username);
+        return $query->execute();
+    }
+
     public function getPregunta($username)
     {
         $percentage = $this->getRank($username);

@@ -73,6 +73,7 @@ INSERT INTO `respuesta` (`id`, `idPregunta`, `contenido`, `correcta`) VALUES
 (13, 4, 'George Washington', 1),
 (14, 4, 'Abraham Lincoln', 0),
 (15, 4, 'Thomas Jefferson', 0),
+(61, 4, 'Alexander Hamilton', 0),
 (16, 6, 'John Adams', 0),
 (17, 5, '2006', 0),
 (18, 5, '2010', 1),

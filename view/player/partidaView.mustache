@@ -21,7 +21,7 @@
                 <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin partida-answer-button">{{contenido}}</button>
             {{/respuestas}}
         </form>
-        <a href="/user/reportQuestion/questionId={{pregunta.id}}" class="partida-report-link">Reportar Pregunta</a>
+        <a href="/partida/reportQuestion/questionId={{pregunta.id}}" class="partida-report-link">Reportar Pregunta</a>
     {{/game_over}}
 </div>
 <input type="hidden" id="tiempoEnvio" value="{{tiempoEnvio}}">

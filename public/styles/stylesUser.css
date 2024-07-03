@@ -1,13 +1,13 @@
 /*lobby*/
 .lobby-container {
   width: 75%;
-  padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  margin-top: 60px !important;
 }
 
 .lobby-container h2 {
@@ -36,6 +36,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
 }
 
 .ranking-container h1 {
@@ -95,7 +96,7 @@ a.ranking-username:hover {
 /*suggestions*/
 .suggestion-container {
   max-width: 400px;
-  margin: 20px auto;
+  margin: 60px auto !important;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -187,4 +188,28 @@ a.ranking-username:hover {
   display: block;
   margin-top: 20px;
   color: #008000;
+}
+
+/*reporte*/
+
+.report-message-container {
+  width: 75%;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #40fa87;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.report-message {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.report-button {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }

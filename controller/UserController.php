@@ -41,18 +41,6 @@ class UserController
         $this->presenter->render("view/player/suggestQuestionView.mustache", $data);
     }
 
-    public function reportQuestion()
-    {
-        $questionId = $_GET['questionId'];
-        $username = $_SESSION['user']['username'];
-        $data = [];
-
-        if($this->model->reportQuestion($questionId, $username)) {
-            redirect('/partida/get');
-
-        }
-    }
-
     public function registerView()
     {
         $data = [
