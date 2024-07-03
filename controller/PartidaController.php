@@ -20,7 +20,6 @@ class PartidaController
     public function get()
     {
         $pregunta = $this->mostrarPregunta();
-        $_SESSION['tiempoEnvio'] = new DateTime("now");
         $this->manageSessionPartida($pregunta["id"]);
     }
 
@@ -33,15 +32,15 @@ class PartidaController
         }
     }
 
-    private function renderPartidaView($pregunta, $respuestas)
+    private function renderPartidaView($pregunta, $respuestas, $tiempoEnvio)
     {
-        $this->presenter->render("view/player/partidaView.mustache", ["pregunta" => $pregunta, "respuestas" => $respuestas]);
+        $this->presenter->render("view/player/partidaView.mustache", ["pregunta" => $pregunta, "respuestas" => $respuestas, "tiempoEnvio" => $tiempoEnvio]);
     }
 
     public function answer()
     {
-        $tiempoActual = new DateTime("now");
-        $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio']->getTimestamp();
+        $tiempoActual = new DateTime();
+        $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio'];
         if($timer > 30) {
             $_SESSION['game_over'] = true;
             unset($_SESSION['partida']);
@@ -78,9 +77,18 @@ class PartidaController
         $this->get();
     }
 
+    public function end()
+    {
+        $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $timer]);
+    }
+
     private function mostrarPregunta()
     {
         $pregunta = $this->model->getPregunta($_SESSION['user']['username']);
+
+        $tiempoEnvio = new DateTime("now");
+        $_SESSION['tiempoEnvio'] = $tiempoEnvio->getTimestamp();
+
 
         if (!$pregunta) {
             echo "Vista: no se pudo obtener pregunta";
@@ -91,7 +99,7 @@ class PartidaController
             echo "Vista: no se pudieron obtener respuestas";
         }
 
-        $this->renderPartidaView($pregunta, $respuestas);
+        $this->renderPartidaView($pregunta, $respuestas, $_SESSION['tiempoEnvio']);
 
         return $pregunta;
     }

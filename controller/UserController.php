@@ -95,6 +95,9 @@ class UserController
         if (isset($_GET['username'])) {
             $username = $_GET['username'];
             $user = $this->model->getUserByUsername($username);
+            if($user === null) {
+                redirect('user/errorView/error=404');
+            }
         } else {
             $user = $_SESSION['user'];
         }
@@ -127,7 +130,15 @@ class UserController
 
     public function errorView()
     {
-        $data = [];
+        $error = $_GET['error'];
+        if($error == 404) {
+            $data = ['error' => "Usuario no encontrado"];
+        }
+
+        if($error == 403) {
+            $data = ['error' => "Acceso denegado"];
+        }
+
         $this->presenter->render("view/template/accessDeniedView.mustache", $data);
     }
 
