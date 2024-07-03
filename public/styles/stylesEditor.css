@@ -1,8 +1,8 @@
 /* Home */
 .questions-container {
   max-width: 800px;
-  margin: 20px auto;
-  padding: 0px 20px;
+  margin: 60px auto !important;
+  padding: 10px 20px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -52,7 +52,7 @@
 
 .manageQuestion-container {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 60px auto !important;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -123,7 +123,7 @@
 
 .suggestion-container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 60px auto !important;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -172,7 +172,7 @@
 
 .manageSuggestion-container {
   max-width: 600px;
-  margin: 20px auto;
+  margin: 60px auto !important;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -239,7 +239,7 @@
 
 .reports-container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 60px auto !important;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ccc;

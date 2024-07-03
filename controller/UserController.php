@@ -41,18 +41,6 @@ class UserController
         $this->presenter->render("view/player/suggestQuestionView.mustache", $data);
     }
 
-    public function reportQuestion()
-    {
-        $questionId = $_GET['questionId'];
-        $username = $_SESSION['user']['username'];
-        $data = [];
-
-        if($this->model->reportQuestion($questionId, $username)) {
-            redirect('/partida/get');
-
-        }
-    }
-
     public function registerView()
     {
         $data = [
@@ -95,6 +83,9 @@ class UserController
         if (isset($_GET['username'])) {
             $username = $_GET['username'];
             $user = $this->model->getUserByUsername($username);
+            if($user === null) {
+                redirect('user/errorView/error=404');
+            }
         } else {
             $user = $_SESSION['user'];
         }
@@ -127,7 +118,21 @@ class UserController
 
     public function errorView()
     {
-        $data = [];
+        $error = $_GET['error'];
+
+        switch ($error) {
+            case 404:
+                $data = ['error' => "Usuario no encontrado"];
+                break;
+            case 403:
+                $data = ['error' => "Acceso denegado"];
+                break;
+            default:
+                $data = ['error' => "Error"];
+                break;
+        }
+
+
         $this->presenter->render("view/template/accessDeniedView.mustache", $data);
     }
 

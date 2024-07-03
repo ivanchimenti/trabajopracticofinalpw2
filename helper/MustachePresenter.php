@@ -27,6 +27,9 @@ class MustachePresenter
 
         if (isset($_SESSION['user']['role'])) {
             switch ($_SESSION['user']['role']) {
+                case 'u':
+                    $headerFile = $this->partialsPathLoader . '/headerUser.mustache';
+                    break;
                 case 'e':
                     $headerFile = $this->partialsPathLoader . '/headerEditor.mustache';
                     break;
@@ -34,6 +37,7 @@ class MustachePresenter
                     $headerFile = $this->partialsPathLoader . '/headerAdmin.mustache';
                     break;
                 default:
+                    $headerFile = $this->partialsPathLoader . '/header.mustache';
                     break;
             }
         }

@@ -1,28 +1,28 @@
-  <div class="w3-container w3-content w3-center w3-padding-64 partida-container" style="max-width: 800px" id="band">
-        {{#game_over}}
-            <h2 class="w3-wide partida-header">Fin del Juego</h2>
-            {{#out_of_time}}
-                <h1 class="partida-message">Te quedaste sin tiempo. ¡Has perdido!</h1>
-            {{/out_of_time}}
-            {{^out_of_time}}
-                <h1 class="partida-message">Has respondido incorrectamente. ¡Has perdido!</h1>
-            {{/out_of_time}}
-            <a href="/partida/reset" class="w3-button w3-green partida-button">Volver a Jugar</a>
-            <a href="/user/lobby" class="w3-button w3-red partida-button">Volver al lobby</a>
-        {{/game_over}}
+<div class="w3-container w3-content w3-center w3-padding-64 partida-container" style="max-width: 800px" id="band">
+    {{#game_over}}
+        <h2 class="w3-wide partida-header">Fin del Juego</h2>
+        {{#out_of_time}}
+            <h1 class="partida-message">Te quedaste sin tiempo. ¡Has perdido!</h1>
+        {{/out_of_time}}
+        {{^out_of_time}}
+            <h1 class="partida-message">Has respondido incorrectamente. ¡Has perdido!</h1>
+        {{/out_of_time}}
+        <a href="/partida/get" class="w3-button w3-green partida-button">Volver a Jugar</a>
+        <a href="/user/lobby" class="w3-button w3-red partida-button">Volver al lobby</a>
+    {{/game_over}}
 
-        {{^game_over}}
-            <div class="partida-time">Tiempo restante: <span id="time"></span></div>
-            <img src="/public/categories/{{pregunta.categoria}}.webp" class="partida-category-img" alt="Categoria de la pregunta">
-            <h1 class="partida-question">{{pregunta.contenido}}</h1>
-            <h2 class="partida-answer-header">Respuestas:</h2>
-            <form action="/partida/answer" method="post" class="partida-form">
-                {{#respuestas}}
-                    <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin partida-answer-button">{{contenido}}</button>
-                {{/respuestas}}
-            </form>
-            <a href="/user/reportQuestion/questionId={{pregunta.id}}" class="partida-report-link">Reportar Pregunta</a>
-        {{/game_over}}
-    </div>
-
-    <script src="/public/scripts/partida.js"></script>
+    {{^game_over}}
+        <div class="partida-time">Tiempo restante: <span id="time"></span></div>
+        <img src="/public/categories/{{pregunta.categoria}}.webp" class="partida-category-img" alt="Categoria de la pregunta">
+        <h1 class="partida-question">{{pregunta.contenido}}</h1>
+        <h2 class="partida-answer-header">Respuestas:</h2>
+        <form action="/partida/answer" method="post" class="partida-form">
+            {{#respuestas}}
+                <button type="submit" name="respuesta_id" value="{{id}}" class="w3-button w3-light-grey w3-margin partida-answer-button">{{contenido}}</button>
+            {{/respuestas}}
+        </form>
+        <a href="/partida/reportQuestion/questionId={{pregunta.id}}" class="partida-report-link">Reportar Pregunta</a>
+    {{/game_over}}
+</div>
+<input type="hidden" id="tiempoEnvio" value="{{tiempoEnvio}}">
+<script src="/public/scripts/partida.js"></script>
