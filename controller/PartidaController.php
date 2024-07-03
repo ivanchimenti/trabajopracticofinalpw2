@@ -90,6 +90,8 @@ class PartidaController
             $correcta = $respuesta['correcta'] == 1;
             $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username'], $correcta);
             if ($correcta) {
+                $tiempoActual = new DateTime();
+                $_SESSION['tiempoEnvio'] = $tiempoActual->getTimestamp();
                 $_SESSION['puntuacion'] += 1;
                 $this->model->updatePartida($_SESSION['partida']['id'], 0, $_SESSION['puntuacion']);
                 redirect("/partida/get");
