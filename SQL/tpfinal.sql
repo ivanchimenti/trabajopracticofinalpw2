@@ -130,6 +130,7 @@ create table partida(
                         ult_pregunta INT NOT NULL,
                         fecha datetime NOT NULL,
                         puntuacion INT NOT NULL,
+                        finalizada tinyint(1) NOT NULL,
                         CONSTRAINT FK_PartidaUser FOREIGN KEY (username) REFERENCES user(username)
 );
 

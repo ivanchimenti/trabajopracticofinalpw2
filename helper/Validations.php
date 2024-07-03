@@ -9,6 +9,12 @@ function validateSession($controller, $action)
         redirect("/user/lobby");
     }
 
+    if($controller == "partida" && ($action == "" || $action == "get") && isset($_SESSION['user'])) {
+        if($_SESSION['user']['role'] != "u") {
+            redirect("user/errorView/error=403");
+        }
+    }
+
     if($controller == "admin"  && isset($_SESSION['user'])) {
         if($_SESSION['user']['role'] != "a") {
             redirect("user/errorView/error=403");
@@ -50,6 +56,10 @@ function validateSession($controller, $action)
     }
 
     if($controller == "user" && $action == "profile" && !isset($_SESSION['user'])) {
+        redirect("user/errorView/error=403");
+    }
+
+    if($controller == "partida" && !isset($_SESSION['user'])) {
         redirect("user/errorView/error=403");
     }
 

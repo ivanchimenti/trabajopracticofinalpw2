@@ -1,15 +1,8 @@
 function startTimer(duration, display) {
   let timer = duration;
-  let minutes, seconds;
   let interval = setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
     if (display) {
-      display.textContent = minutes + ":" + seconds;
+      display.textContent = timer;
     }
 
     if (timer > 0) {

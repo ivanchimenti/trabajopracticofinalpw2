@@ -17,10 +17,41 @@ class PartidaController
             $_SESSION['puntuacion'] = 0;
         }
     }
+
     public function get()
     {
         $pregunta = $this->mostrarPregunta();
         $this->manageSessionPartida($pregunta["id"]);
+    }
+
+    private function mostrarPregunta()
+    {
+        $tiempoActual = new DateTime();
+        $_SESSION['tiempoEnvio'] = $_SESSION['tiempoEnvio'] ?? $tiempoActual->getTimestamp();
+
+        $partidaActual = $this->model->getPartidaActual($_SESSION['user']['username']);
+        if ($partidaActual) {
+            $preguntaActual = $this->model->getPreguntaById($partidaActual['id_pregunta']);
+            if ($preguntaActual) {
+                $respuestas = $this->model->getRespuestas($preguntaActual['id']);
+                $respuestas = $this->randomizeRespuestas($respuestas);
+            }
+            if ($preguntaActual && $respuestas) {
+                $this->renderPartidaView($preguntaActual, $respuestas, $_SESSION['tiempoEnvio']);
+                return $preguntaActual;
+            }
+        }
+
+        $pregunta = $this->model->getPregunta($_SESSION['user']['username']);
+        $respuestas = $this->model->getRespuestas($pregunta['id']);
+        $respuestas = $this->randomizeRespuestas($respuestas);
+        if (!$pregunta || !$respuestas) {
+            echo "Vista: no se pudo obtener pregunta";
+            return;
+        }
+
+        $this->renderPartidaView($pregunta, $respuestas, $_SESSION['tiempoEnvio']);
+        return $pregunta;
     }
 
     private function manageSessionPartida($preguntaId)
@@ -41,10 +72,9 @@ class PartidaController
     {
         $tiempoActual = new DateTime();
         $timer = $tiempoActual->getTimestamp() - $_SESSION['tiempoEnvio'];
-        if($timer > 30) {
-            $_SESSION['game_over'] = true;
-            unset($_SESSION['partida']);
-            unset($_SESSION['puntuacion']);
+
+        if ($timer > 30) {
+            $this->gameOver();
             $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $timer]);
             return;
         }
@@ -58,12 +88,10 @@ class PartidaController
             $this->model->addPreguntaRespondida($respuesta['idPregunta'], $user['username'], $correcta);
             if ($correcta) {
                 $_SESSION['puntuacion'] += 1;
-                $this->get();
+                redirect("/partida/get");
             } else {
-                $_SESSION['game_over'] = true;
-                unset($_SESSION['partida']);
-                unset($_SESSION['puntuacion']);
-
+                $this->model->endPartida($_SESSION['partida']['id']);
+                $this->gameOver();
                 $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true]);
             }
         } else {
@@ -74,33 +102,27 @@ class PartidaController
     public function reset()
     {
         $_SESSION['game_over'] = false;
-        $this->get();
+        redirect("/partida/get");
     }
 
     public function end()
     {
-        $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $timer]);
+        $this->gameOver();
+        $this->presenter->render("view/player/partidaView.mustache", ["game_over" => true, "out_of_time" => true, "timer" => $_SESSION['tiempoEnvio']]);
     }
 
-    private function mostrarPregunta()
+    private function gameOver()
     {
-        $pregunta = $this->model->getPregunta($_SESSION['user']['username']);
+        $_SESSION['game_over'] = true;
+        unset($_SESSION['partida']);
+        unset($_SESSION['puntuacion']);
+        unset($_SESSION['tiempoEnvio']);
+    }
 
-        $tiempoEnvio = new DateTime("now");
-        $_SESSION['tiempoEnvio'] = $tiempoEnvio->getTimestamp();
-
-
-        if (!$pregunta) {
-            echo "Vista: no se pudo obtener pregunta";
-        }
-
-        $respuestas = $this->model->getRespuestas($pregunta["id"]);
-        if (!$respuestas) {
-            echo "Vista: no se pudieron obtener respuestas";
-        }
-
-        $this->renderPartidaView($pregunta, $respuestas, $_SESSION['tiempoEnvio']);
-
-        return $pregunta;
+    private function randomizeRespuestas($respuestas)
+    {
+        $respuestasRandom = $respuestas;
+        shuffle($respuestasRandom);
+        return $respuestasRandom;
     }
 }

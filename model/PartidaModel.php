@@ -107,6 +107,16 @@ class PartidaModel
         $query->execute();
     }
 
+    public function getPreguntaById($idPregunta)
+    {
+        $query = $this->database->prepare("SELECT * FROM Pregunta WHERE id = ?");
+        $query->bind_param("i", $idPregunta);
+        $query->execute();
+        $result = $query->get_result();
+
+        return $result->num_rows > 0 ? $result->fetch_assoc() : null;
+    }
+
     public function getRespuestas($idPregunta)
     {
         $query =  $this->database->prepare("SELECT * FROM Respuesta WHERE idPregunta = ?");
@@ -202,7 +212,7 @@ class PartidaModel
 
     public function getPartidaActual($username)
     {
-        $query = $this->database->prepare("SELECT MAX(id) as id FROM partida WHERE username LIKE ? GROUP BY username;");
+        $query = $this->database->prepare("SELECT MAX(id) as id, ult_pregunta as id_pregunta FROM partida WHERE username LIKE ? AND finalizada = 0;");
         $query->bind_param("s", $username);
         $query->execute();
         $result = $query->get_result();
@@ -211,7 +221,7 @@ class PartidaModel
     }
     public function addPartida($idUsuario, $idPregunta, $puntuacion)
     {
-        $query = $this->database->prepare("INSERT INTO partida (username, ult_pregunta,fecha, puntuacion) VALUES (?,?,NOW(),?);");
+        $query = $this->database->prepare("INSERT INTO partida (username, ult_pregunta,fecha, puntuacion, finalizada) VALUES (?,?,NOW(),?, 0);");
         $query->bind_param("sii", $idUsuario, $idPregunta, $puntuacion);
         $query->execute();
         return $this->getPartidaActual($idUsuario);
@@ -221,6 +231,13 @@ class PartidaModel
     {
         $query = $this->database->prepare("UPDATE partida SET ult_pregunta = ?, puntuacion = ? WHERE id LIKE ?;");
         $query->bind_param("iii", $idPregunta, $puntuacion, $idPartida);
+        return $query->execute();
+    }
+
+    public function endPartida($idPartida)
+    {
+        $query = $this->database->prepare("UPDATE partida SET finalizada = 1 WHERE id LIKE ?;");
+        $query->bind_param("i", $idPartida);
         return $query->execute();
     }
 
