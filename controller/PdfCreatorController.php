@@ -12,8 +12,20 @@ class PdfCreatorController{
 
     public function create()
     {
-        $resultado = $_GET['data'];
-        $html = $this->presenter->generateHtml("view/pdfTemplates/pruebaView.mustache", ["resultado" => $resultado]);
-        $this->pdfCreator->create($html);
+        if (isset($_GET['data'])) {
+            $base64 = $this->generateBase64Image($_GET['data']);
+            $html = $this->presenter->generateHtml("view/pdfTemplates/pruebaView.mustache", ["base64Image" => $base64]);
+            $this->pdfCreator->create($html);
+        } else {
+            // Manejar el caso donde el parámetro 'data' no está presente
+            echo "Parámetro 'data' no encontrado.";
+        }
+    }
+
+    public function generateBase64Image($filename){
+        $filePath =  'public/graficos/' . $filename;
+        $type = pathinfo($filePath, PATHINFO_EXTENSION);
+        $data = file_get_contents($filePath);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 }

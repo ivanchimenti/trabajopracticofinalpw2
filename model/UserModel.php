@@ -50,7 +50,7 @@ class UserModel
 
     public function register($username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $latitude, $longitude, $email, $profilePicturePath)
     {
-        $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, latitude, longitude, email, profile_picture, role, cantEntregada, cantRespondida) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'u',10,5)");
+        $query = $this->database->prepare("INSERT INTO user (username, password, authToken, full_name, birth_year, gender, latitude, longitude, email, profile_picture, role, cantEntregada, cantRespondida,fecha_ingreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'u',10,5,CURDATE())");
         $query->bind_param("ssssisiiss", $username, $hashedPassword, $authToken, $fullName, $birthYear, $gender, $latitude, $longitude, $email, $profilePicturePath);
         return $query->execute();
     }

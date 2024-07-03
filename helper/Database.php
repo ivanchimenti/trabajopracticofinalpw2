@@ -19,6 +19,11 @@ class Database
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
+    public function query_fetch_assoc($sql){
+        $result = mysqli_query($this->connection, $sql);
+        return mysqli_fetch_assoc($result);
+    }
+
     public function execute($sql)
     {
         mysqli_query($this->conn, $sql);

@@ -15,6 +15,8 @@ include_once("model/EditorModel.php");
 include_once("model/PartidaModel.php");
 include_once("model/RankingModel.php");
 include_once("model/GraficosModel.php");
+include_once("model/ReporteModel.php");
+
 
 include_once("helper/Database.php");
 include_once("helper/Router.php");
@@ -29,6 +31,7 @@ include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/dompdf/autoload.inc.php');
 include_once('vendor/jpgraph/src/jpgraph.php');
 include_once('vendor/jpgraph/src/jpgraph_line.php');
+include_once('vendor/jpgraph/src/jpgraph_bar.php');
 
 class Configuration
 {
@@ -39,7 +42,7 @@ class Configuration
 
     public static function getAdminController(): AdminController
     {
-        return new AdminController(self::getPresenter(), self::getUserModel());
+        return new AdminController(self::getPresenter(), self::getReporteModel(),self::getGraficosCreator());
     }
 
     public static function getEditorController(): EditorController
@@ -87,6 +90,11 @@ class Configuration
     private static function getAdminModel(): AdminModel
     {
         return new AdminModel(self::getDatabase());
+    }
+
+    private static function getReporteModel(): ReporteModel
+    {
+        return new ReporteModel(self::getDatabase());
     }
 
     private static function getEditorModel(): EditorModel
