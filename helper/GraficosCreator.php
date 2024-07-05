@@ -19,6 +19,35 @@ class GraficosCreator
         $graph->Stroke('public/graficos/graph.png');
     }
 
+    public function getGraficoPie($data, $filename, $title)
+    {
+        $data1y = array();
+        $dataName = array();
+
+
+        foreach ($data as $row) {
+            $data1y[] = $row["cantidad"];
+            $dataName[] = $row["rango_edad"] . ' total: ' . $row["cantidad"];
+            $total += $row["cantidad"];
+        }
+
+
+        $graph = new PieGraph(350, 250);
+
+        $graph->SetShadow();
+
+        $graph->title->Set($title);
+
+        $p1 = new PiePlot($data1y);
+        $p1->SetLegends($dataName);
+        $p1->SetCenter(0.5, 0.5);
+
+        $graph->Add($p1);
+        $nombreImg = 'public/graficos/' . $filename;
+        $this->getImagenGrafico($graph, $nombreImg);
+    }
+
+
     public function getGraficoBarra($data, $filename, $title)
     {
 
@@ -93,20 +122,20 @@ class GraficosCreator
         }
 
         // ESTO ME ARREGLA EL GRAFICO DE LINEAS
-        // if (count($data2y) < 2) {
-        //     $data2y[] = 0;
-        //     $dataName[] = "";
-        // }
+        if (count($data2y) < 2) {
+            $data2y[] = 0;
+            $dataName[] = "";
+        }
 
-        // if (count($data3y) < 2) {
-        //     $data3y[] = 0;
-        //     $dataName[] = "";
-        // }
+        if (count($data3y) < 2) {
+            $data3y[] = 0;
+            $dataName[] = "";
+        }
 
-        // if (count($data4y) < 2) {
-        //     $data4y[] = 0;
-        //     $dataName[] = "";
-        // }
+        if (count($data4y) < 2) {
+            $data4y[] = 0;
+            $dataName[] = "";
+        }
 
         $dataName = array_unique($dataName);
         $data1y = array_unique($data1y);

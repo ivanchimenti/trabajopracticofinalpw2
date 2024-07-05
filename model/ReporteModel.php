@@ -67,7 +67,7 @@ class ReporteModel
 
     public function cantidadPreguntas($filtro)
     {
-        $groupBy = $this->getFiltro($filtro, 'fecha_ingreso');
+        $groupBy = $this->getFiltro($filtro);
 
         $sql = "SELECT 
                 $groupBy as filtro,
@@ -76,6 +76,26 @@ class ReporteModel
             FROM Pregunta
             GROUP BY filtro
             ORDER BY filtro;";
+
+        return $this->database->query($sql);
+    }
+
+    public function cantidadDeUsuariosPorEdad($filtro)
+    {
+        $groupBy = $this->getFiltro($filtro);
+
+        $sql = "SELECT 
+                COUNT(username) as cantidad,
+                CASE 
+                    WHEN (YEAR(CURDATE()) - birth_year) BETWEEN 0 AND 21 THEN '0-21'
+                    WHEN (YEAR(CURDATE()) - birth_year) BETWEEN 22 AND 60 THEN '22-60'
+                    ELSE '+60'
+                END as rango_edad,
+                $groupBy as filtro
+            FROM user
+            WHERE role = 'u'
+            GROUP BY rango_edad, filtro
+            ORDER BY filtro, rango_edad;";
 
         return $this->database->query($sql);
     }

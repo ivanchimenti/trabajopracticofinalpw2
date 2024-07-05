@@ -14,7 +14,6 @@ include_once("model/AdminModel.php");
 include_once("model/EditorModel.php");
 include_once("model/PartidaModel.php");
 include_once("model/RankingModel.php");
-include_once("model/GraficosModel.php");
 include_once("model/ReporteModel.php");
 
 
@@ -32,6 +31,7 @@ include_once('vendor/dompdf/autoload.inc.php');
 include_once('vendor/jpgraph/src/jpgraph.php');
 include_once('vendor/jpgraph/src/jpgraph_line.php');
 include_once('vendor/jpgraph/src/jpgraph_bar.php');
+include_once('vendor/jpgraph/src/jpgraph_pie.php');
 
 class Configuration
 {
@@ -42,7 +42,7 @@ class Configuration
 
     public static function getAdminController(): AdminController
     {
-        return new AdminController(self::getPresenter(), self::getReporteModel(),self::getGraficosCreator());
+        return new AdminController(self::getPresenter(), self::getReporteModel(), self::getGraficosCreator());
     }
 
     public static function getEditorController(): EditorController
@@ -67,7 +67,7 @@ class Configuration
 
     public static function getGraficosController(): GraficosController
     {
-        return new GraficosController(self::getPresenter(), self::getGraficosModel(), self::getGraficosCreator());
+        return new GraficosController(self::getPresenter(), self::getGraficosCreator());
     }
 
     private static function getDatabase()
@@ -110,10 +110,6 @@ class Configuration
     private static function getRankingModel(): RankingModel
     {
         return new RankingModel(self::getDatabase());
-    }
-    private static function getGraficosModel(): GraficosModel
-    {
-        return new GraficosModel(self::getDatabase());
     }
 
     private static function getConfig()
