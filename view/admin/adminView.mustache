@@ -1,17 +1,63 @@
-<a href="/admin/listreports" class="w3-button w3-green">Listar Reportes</a>
+<form method="post" action="/admin/listreports">
+    <label for="filtro">Seleccionar filtro:</label>
+    <select name="filtro" id="filtro">
+        <option value="Year">Año</option>
+        <option value="Month">Mes</option>
+        <option value="Day">Día</option>
+        <option value="Week">Semana</option>
+    </select>
+    <button type="submit" class="w3-button w3-green">Listar Reportes</button>
+</form>
 
 {{#data}}
-    <a href="/pdfCreator/create?data={{ jugador.imagen_grafico }}" class="w3-button w3-green">Generar pdf1</a>
-    <a href="/pdfCreator/create?data={{ genero.imagen_grafico }}" class="w3-button w3-green">Generar pdf2</a>
-    <a href="/pdfCreator/create?data={{ partidas.imagen_grafico }}" class="w3-button w3-green">Generar pdf3</a>
-    <a href="/pdfCreator/create?data={{ preguntas.imagen_grafico }}" class="w3-button w3-green">Generar pdf4</a>
-    <a href="/pdfCreator/create?data={{ porcentajeCorrecto.imagen_grafico }}" class="w3-button w3-green">Generar pdf5</a>
+<div class="w3-container w3-margin-top">
+    <div class="w3-row-padding">
+        <div class="w3-col m3">
+            <div class="w3-card-2 w3-round-medium w3-padding-large">
+                <img src="/public/graficos/{{ jugador.imagen_grafico }}" alt="img" style="width:100%">
+                <div class="w3-container w3-center">
+                    <a href="/pdfCreator/create?data={{ jugador.imagen_grafico }}" class="w3-button w3-green w3-margin-top">Generar PDF</a>
+                </div>
+            </div>
+        </div>
 
-    img: <img src="/public/graficos/{{ jugador.imagen_grafico }}" alt="img">
-    img: <img src="/public/graficos/{{ genero.imagen_grafico }}" alt="img">
-    img: <img src="/public/graficos/{{ partidas.imagen_grafico }}" alt="img">
-    img: <img src="/public/graficos/{{ preguntas.imagen_grafico }}" alt="img">
-    img: <img src="/public/graficos/{{ porcentajeCorrecto.imagen_grafico }}" alt="img">
+        <div class="w3-col m3">
+            <div class="w3-card-2 w3-round-medium w3-padding-large">
+                <img src="/public/graficos/{{ genero.imagen_grafico }}" alt="img" style="width:100%">
+                <div class="w3-container w3-center">
+                    <a href="/pdfCreator/create?data={{ genero.imagen_grafico }}" class="w3-button w3-green w3-margin-top">Generar PDF</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="w3-col m3">
+            <div class="w3-card-2 w3-round-medium w3-padding-large">
+                <img src="/public/graficos/{{ partidas.imagen_grafico }}" alt="img" style="width:100%">
+                <div class="w3-container w3-center">
+                    <a href="/pdfCreator/create?data={{ partidas.imagen_grafico }}" class="w3-button w3-green w3-margin-top">Generar PDF</a>
+                </div>
+            </div>
+        </div>
+        </div>
+<div class="w3-row-padding w3-margin-top">
+        <div class="w3-col m3">
+            <div class="w3-card-2 w3-round-medium w3-padding-large">
+                <img src="/public/graficos/{{ preguntas.imagen_grafico }}" alt="img" style="width:100%">
+                <div class="w3-container w3-center">
+                    <a href="/pdfCreator/create?data={{ preguntas.imagen_grafico }}" class="w3-button w3-green w3-margin-top">Generar PDF</a>
+                </div>
+            </div>
+        </div>
 
+        <div class="w3-col m3">
+            <div class="w3-card-2 w3-round-medium w3-padding-large">
+                <img src="/public/graficos/{{ porcentajeCorrecto.imagen_grafico }}" alt="img" style="width:100%">
+                <div class="w3-container w3-center">
+                    <a href="/pdfCreator/create?data={{ porcentajeCorrecto.imagen_grafico }}" class="w3-button w3-green w3-margin-top">Generar PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 {{/data}}

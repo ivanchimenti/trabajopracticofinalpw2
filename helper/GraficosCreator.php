@@ -76,7 +76,6 @@ class GraficosCreator
         $data4y = array();
 
         for ($i = 0; $i < count($data); $i++) {
-
             $dataName[] = $data[$i]["filtro"];
             $data1y[] = $data[$i]["filtro1"];
 
@@ -92,6 +91,22 @@ class GraficosCreator
                     break;
             }
         }
+
+        // ESTO ME ARREGLA EL GRAFICO DE LINEAS
+        // if (count($data2y) < 2) {
+        //     $data2y[] = 0;
+        //     $dataName[] = "";
+        // }
+
+        // if (count($data3y) < 2) {
+        //     $data3y[] = 0;
+        //     $dataName[] = "";
+        // }
+
+        // if (count($data4y) < 2) {
+        //     $data4y[] = 0;
+        //     $dataName[] = "";
+        // }
 
         $dataName = array_unique($dataName);
         $data1y = array_unique($data1y);
