@@ -16,7 +16,7 @@ CREATE TABLE `user` (
                         `role` varchar(1),
                         `cantEntregada` int(11) NOT NULL,
                         `cantRespondida` int(11) NOT NULL,
-                        `fecha_ingreso` datetime NOT NULL DEFAULT NOW(),
+                        `fecha_ingreso` datetime NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE `user`
@@ -30,7 +30,8 @@ create table Pregunta(
                          cantRespondida INT NOT NULL,
                          porcentajeAcertado INT NOT NULL,
                          estado TINYINT(1) NOT NULL,
-                         primary key(id)
+                         primary key(id),
+                         fecha_ingreso datetime NOT NULL DEFAULT NOW()
 );
 
 create table Respuesta(
@@ -74,8 +75,7 @@ INSERT INTO `respuesta` (`id`, `idPregunta`, `contenido`, `correcta`) VALUES
 (13, 4, 'George Washington', 1),
 (14, 4, 'Abraham Lincoln', 0),
 (15, 4, 'Thomas Jefferson', 0),
-(61, 4, 'Alexander Hamilton', 0),
-(16, 6, 'John Adams', 0),
+(16, 4, 'John Adams', 0),
 (17, 5, '2006', 0),
 (18, 5, '2010', 1),
 (19, 5, '2014', 0),
@@ -133,6 +133,7 @@ create table partida(
                         fecha datetime NOT NULL,
                         puntuacion INT NOT NULL,
                         finalizada tinyint(1) NOT NULL,
+                        fecha_ingreso datetime NOT NULL DEFAULT NOW(),
                         CONSTRAINT FK_PartidaUser FOREIGN KEY (username) REFERENCES user(username)
 );
 
@@ -141,6 +142,7 @@ CREATE TABLE `sugerencia` (
   `contenido` varchar(255) NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `username` varchar(255) NOT NULL,
+  `fecha_ingreso` datetime NOT NULL DEFAULT NOW(),
   FOREIGN KEY (username) REFERENCES user(username)
 );
 
@@ -148,6 +150,7 @@ CREATE TABLE `reporte` (
   `id` int(11) PRIMARY KEY auto_increment,
   `username` varchar(255) NOT NULL,
   `id_pregunta` int(11) NOT NULL,
+  `fecha_ingreso` datetime NOT NULL DEFAULT NOW(),
   FOREIGN KEY (username) REFERENCES user(username),
   FOREIGN KEY (id_pregunta) REFERENCES pregunta(id)
 )

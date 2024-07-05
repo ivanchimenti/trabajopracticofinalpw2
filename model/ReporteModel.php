@@ -9,7 +9,8 @@ class ReporteModel
         $this->database = $database;
     }
 
-    public function cantidadDeUsuarios($filtro){
+    public function cantidadDeUsuarios($filtro)
+    {
 
         $groupBy = $this->getFiltro($filtro);
 
@@ -22,7 +23,8 @@ class ReporteModel
         return $this->database->query($sql);
     }
 
-    public function cantidadJugadoresPorGenero($filtro){
+    public function cantidadJugadoresPorGenero($filtro)
+    {
         $groupBy = $this->getFiltro($filtro);
         $sql = "SELECT COUNT(username) cantidad, 
                 CASE 
@@ -39,7 +41,47 @@ class ReporteModel
         return $this->database->query($sql);
     }
 
-    public function getFiltro($filtro){
+    public function cantidadPartidasJugadas($filtro)
+    {
+        $groupBy = $this->getFiltro($filtro);
+        $sql = "SELECT COUNT(id) as cantidad,
+                $groupBy as filtro
+                FROM partida
+                WHERE finalizada = 1
+                GROUP BY filtro order by filtro;";
+
+        return $this->database->query($sql);
+    }
+
+    public function porcentajeCorrectoPorJugador($filtro)
+    {
+        $groupBy = $this->getFiltro($filtro);
+        $sql = "SELECT username, ( cantRespondida / cantEntregada * 100) AS cantidad,
+        $groupBy as filtro 
+        FROM user
+        WHERE role = 'u'
+        GROUP BY filtro order by filtro;";
+
+        return $this->database->query($sql);
+    }
+
+    public function cantidadPreguntas($filtro)
+    {
+        $groupBy = $this->getFiltro($filtro, 'fecha_ingreso');
+
+        $sql = "SELECT 
+                $groupBy as filtro,
+                SUM(CASE WHEN estado = 1 THEN 1 ELSE 0 END) as preguntas_activas,
+                COUNT(id) as total_preguntas
+            FROM Pregunta
+            GROUP BY filtro
+            ORDER BY filtro;";
+
+        return $this->database->query($sql);
+    }
+
+    private function getFiltro($filtro)
+    {
         switch($filtro) {
             case 'Month':
                 $groupBy = "MONTH(fecha_ingreso)";
@@ -59,4 +101,5 @@ class ReporteModel
 
         return $groupBy;
     }
+
 }

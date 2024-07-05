@@ -16,31 +16,36 @@ class MustachePresenter
         $this->partialsPathLoader = $partialsPathLoader;
     }
 
-    public function render($contentFile, $data = array())
+    public function render($contentFile, $data = array(), $isForPdf = false)
     {
-        echo $this->generateHtml($contentFile, $data);
+        echo $this->generateHtml($contentFile, $data, $isForPdf);
     }
 
-    public function generateHtml($contentFile, $data = array())
+    public function generateHtml($contentFile, $data = array(), $isForPdf = false)
     {
         $headerFile = $this->partialsPathLoader . '/header.mustache'; // Default header file
 
-        if (isset($_SESSION['user']['role'])) {
-            switch ($_SESSION['user']['role']) {
-                case 'u':
-                    $headerFile = $this->partialsPathLoader . '/headerUser.mustache';
-                    break;
-                case 'e':
-                    $headerFile = $this->partialsPathLoader . '/headerEditor.mustache';
-                    break;
-                case 'a':
-                    $headerFile = $this->partialsPathLoader . '/headerAdmin.mustache';
-                    break;
-                default:
-                    $headerFile = $this->partialsPathLoader . '/header.mustache';
-                    break;
+        if ($isForPdf) {
+            $headerFile = $this->partialsPathLoader . '/headerPdf.mustache'; // Header file for PDF
+        } else {
+            if (isset($_SESSION['user']['role'])) {
+                switch ($_SESSION['user']['role']) {
+                    case 'u':
+                        $headerFile = $this->partialsPathLoader . '/headerUser.mustache';
+                        break;
+                    case 'e':
+                        $headerFile = $this->partialsPathLoader . '/headerEditor.mustache';
+                        break;
+                    case 'a':
+                        $headerFile = $this->partialsPathLoader . '/headerAdmin.mustache';
+                        break;
+                    default:
+                        $headerFile = $this->partialsPathLoader . '/header.mustache';
+                        break;
+                }
             }
         }
+
         if (file_exists($headerFile)) {
             $contentAsString = file_get_contents($headerFile);
         } else {

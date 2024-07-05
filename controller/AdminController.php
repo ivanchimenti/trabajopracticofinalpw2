@@ -19,21 +19,29 @@ class AdminController
         $this->presenter->render("view/admin/adminView.mustache", $data);
     }
 
-    public function listReports(){
-
-        if (isset($_POST['filtro'])) {
-            $filtro = $_POST['filtro'];
-        } else {
-            $filtro = 'Year';
-        }
+    public function listReports()
+    {
+        $filtro = isset($_POST['filtro']) ? $_POST['filtro'] : 'Year';
 
         $data['jugador'] = $this->model->cantidadDeUsuarios($filtro);
         $data['genero'] = $this->model->cantidadJugadoresPorGenero($filtro);
-          $this->graficosCreator->getGraficoBarra($data['jugador'], 'cantidadJugadores.png', 'Cantidad de Jugadores');
-          $this->graficosCreator->getGraficoLinea($data['genero'], 'cantidadPorGenero.png', 'Jugadores por genero');
+        $data['partidas'] = $this->model->cantidadPartidasJugadas($filtro);
+        $data['preguntas'] = $this->model->cantidadPreguntas($filtro);
+        $data['porcentajeCorrecto'] = $this->model->porcentajeCorrectoPorJugador($filtro);
+
+
+        $this->graficosCreator->getGraficoBarra($data['jugador'], 'cantidadJugadores.png', 'Cantidad de Jugadores');
+        // $this->graficosCreator->getGraficoLinea($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
+        $this->graficosCreator->getGraficoBarra($data['partidas'], 'cantidadPartidas.png', 'Cantidad de Partidas Jugadas');
+        $this->graficosCreator->getGraficoBarraDoble($data['preguntas'], 'cantidadPreguntas.png', 'Preguntas Activas y Totales');
+        $this->graficosCreator->getGraficoBarra($data['porcentajeCorrecto'], 'porcentajeCorrecto.png', 'Porcentaje de respuestas correctas');
+
 
         $data['jugador']['imagen_grafico'] = 'cantidadJugadores.png';
-        $data['genero']['imagen_grafico'] = 'cantidadPorGenero.png';
+        // $data['genero']['imagen_grafico'] = 'cantidadPorGenero.png';
+        $data['partidas']['imagen_grafico'] = 'cantidadPartidas.png';
+        $data['preguntas']['imagen_grafico'] = 'cantidadPreguntas.png';
+        $data['porcentajeCorrecto']['imagen_grafico'] = 'porcentajeCorrecto.png';
 
         $this->presenter->render("view/admin/adminView.mustache", ["data" => $data]);
     }

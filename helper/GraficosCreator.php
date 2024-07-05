@@ -1,10 +1,12 @@
 <?php
-class GraficosCreator{
 
+class GraficosCreator
+{
     public function __construct()
     {
     }
-    public function create($datay1){
+    public function create($datay1)
+    {
 
         $graph = new Graph(300, 250);
         $graph->SetScale("textlin");
@@ -17,7 +19,8 @@ class GraficosCreator{
         $graph->Stroke('public/graficos/graph.png');
     }
 
-    public function getGraficoBarra($data,$filename,$title){
+    public function getGraficoBarra($data, $filename, $title)
+    {
 
         $data1y = array();
         $dataName = array();
@@ -32,6 +35,32 @@ class GraficosCreator{
 
         $b1plot = $this->getBarPlot($data1y);
         $graph->Add($b1plot);
+
+        $graph->title->Set($title);
+        $nombreImg = 'public/graficos/' . $filename;
+        $img = $this->getImagenGrafico($graph, $nombreImg);
+    }
+
+    public function getGraficoBarraDoble($data, $filename, $title)
+    {
+        $data1y = array();
+        $data2y = array();
+        $dataName = array();
+
+        for ($i = 0; $i < count($data); $i++) {
+            $data1y[] = $data[$i]["preguntas_activas"];
+            $data2y[] = $data[$i]["total_preguntas"];
+            $dataName[] = $data[$i]["filtro"];
+        }
+
+        $graph = $this->getGraph();
+        $this->getConfigGraph($graph, $dataName);
+
+        $b1plot = $this->getBarPlot($data1y, "Activas", "blue");
+        $b2plot = $this->getBarPlot($data2y, "Totales", "red");
+
+        $gbplot = new GroupBarPlot(array($b1plot, $b2plot));
+        $graph->Add($gbplot);
 
         $graph->title->Set($title);
         $nombreImg = 'public/graficos/' . $filename;
@@ -70,7 +99,7 @@ class GraficosCreator{
         $graph = new Graph(300, 250);
         $graph->SetScale("textlin");
 
-        $theme_class = new UniversalTheme;
+        $theme_class = new UniversalTheme();
 
         $graph->SetTheme($theme_class);
         $graph->img->SetAntiAliasing(false);
@@ -90,21 +119,21 @@ class GraficosCreator{
         $graph->xaxis->SetTickLabels($dataName);
         $graph->xgrid->SetColor('#E3E3E3');
 
-        if(count($data2y) > 0){
+        if(count($data2y) > 0) {
             $p1 = new LinePlot($data2y);
             $graph->Add($p1);
             $p1->SetColor("#6495ED");
             $p1->SetLegend('Femenino');
         }
 
-        if(count($data3y) > 0){
+        if(count($data3y) > 0) {
             $p2 = new LinePlot($data3y);
             $graph->Add($p2);
             $p2->SetColor("#B22222");
             $p2->SetLegend('Masculino');
         }
 
-        if(count($data4y) > 0){
+        if(count($data4y) > 0) {
             $p3 = new LinePlot($data4y);
             $graph->Add($p3);
             $p3->SetColor("#FF1493");
@@ -117,39 +146,44 @@ class GraficosCreator{
         $this->getImagenGrafico($graph, $nombreImg);
     }
 
-    public function getGraph(){
+    public function getGraph()
+    {
         $graph = new Graph(350, 200, 'auto');
         $graph->SetScale("textlin");
-        $theme_class = new UniversalTheme;
+        $theme_class = new UniversalTheme();
         $graph->SetTheme($theme_class);
 
         return $graph;
     }
 
-    public function getConfigGraph($graph, $dataName){
+    public function getConfigGraph($graph, $dataName)
+    {
         $graph->SetBox(false);
         $graph->ygrid->SetFill(false);
         $graph->xaxis->SetTickLabels($dataName);
         return $graph;
     }
 
-    public function getBarPlot($data1y){
+    public function getBarPlot($data1y, $legend = null, $color = null)
+    {
         $b1plot = new BarPlot($data1y);
         $b1plot->SetColor("white");
         $b1plot->SetFillColor("#cc1111");
         $b1plot->value->Show();
 
+        if ($legend != null) {
+            $b1plot->SetLegend($legend);
+        }
+        if ($color != null) {
+            $b1plot->SetFillColor($color);
+        }
         return $b1plot;
     }
 
-    public function getImagenGrafico($graph,$fileName){
+    public function getImagenGrafico($graph, $fileName)
+    {
         $graph->Stroke(_IMG_HANDLER);
         $image = $graph->img->Stream($fileName);
         return $image;
     }
 }
-
-
-
-
-

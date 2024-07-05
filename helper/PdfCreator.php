@@ -1,12 +1,14 @@
 <?php
+
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
 class PdfCreator
 {
-
     public function __construct()
     {
     }
+
     public function create($html)
     {
         $options = new Options();
