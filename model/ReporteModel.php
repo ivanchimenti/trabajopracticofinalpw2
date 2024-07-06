@@ -26,19 +26,87 @@ class ReporteModel
     public function cantidadJugadoresPorGenero($filtro)
     {
         $groupBy = $this->getFiltro($filtro);
-        $sql = "SELECT COUNT(username) cantidad, 
-                CASE 
-                                            WHEN gender like '%emenin%' THEN 'Femenino'
-                                            WHEN gender like '%asculin%' THEN 'Masculino'
-                                            ELSE 'Sin Especificar' 
-                END filtro1,
-                $groupBy as filtro
-            
-                FROM user
-                GROUP BY filtro1, filtro order by filtro;
+        $sql = "WITH Years AS (
+    SELECT DISTINCT YEAR(fecha_ingreso) AS year FROM user
+),
+Genders AS (
+    SELECT 'Femenino' AS gender
+    UNION ALL
+    SELECT 'Masculino'
+    UNION ALL
+    SELECT 'Sin Especificar'
+),
+AllCombinations AS (
+    SELECT y.year, g.gender
+    FROM Years y
+    CROSS JOIN Genders g
+),
+UserCounts AS (
+    SELECT 
+        COUNT(username) AS cantidad, 
+        CASE 
+            WHEN LOWER(gender) LIKE 'femenino' THEN 'Femenino'
+            WHEN LOWER(gender) LIKE 'masculino' THEN 'Masculino'
+            ELSE 'Sin Especificar' 
+        END AS filtro1,
+        YEAR(fecha_ingreso) AS filtro
+    FROM user
+    GROUP BY filtro1, filtro
+)
+SELECT 
+    ac.year AS filtro, 
+    ac.gender AS filtro1,
+    COALESCE(uc.cantidad, 0) AS cantidad
+FROM AllCombinations ac
+LEFT JOIN UserCounts uc ON ac.year = uc.filtro AND ac.gender = uc.filtro1
+ORDER BY ac.year, ac.gender;
                 ";
 
-        return $this->database->query($sql);
+        $result = $this->database->query($sql);
+
+        $years = array();
+        $female = array();
+        $male = array();
+        $unspecified = array();
+
+// Procesar los resultados
+        foreach ($result as $row) {
+            $year = $row['filtro'];
+            $gender = $row['filtro1'];
+            $cantidad = $row['cantidad'];
+
+            if (!in_array($year, $years)) {
+                $years[] = $year;
+            }
+
+            switch ($gender) {
+                case 'Femenino':
+                    $female[$year] = $cantidad;
+                    break;
+                case 'Masculino':
+                    $male[$year] = $cantidad;
+                    break;
+                case 'Sin Especificar':
+                    $unspecified[$year] = $cantidad;
+                    break;
+            }
+        }
+
+        ksort($female);
+        ksort($male);
+        ksort($unspecified);
+
+// Convertir los arrays asociativos en arrays indexados
+        $female = array_values($female);
+        $male = array_values($male);
+        $unspecified = array_values($unspecified);
+
+        return array(
+            'years' => $years,
+            'female' => $female,
+            'male' => $male,
+            'unspecified' => $unspecified
+        );
     }
 
     public function cantidadPartidasJugadas($filtro)

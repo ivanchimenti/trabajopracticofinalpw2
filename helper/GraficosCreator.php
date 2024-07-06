@@ -190,6 +190,50 @@ class GraficosCreator
         $this->getImagenGrafico($graph, $nombreImg);
     }
 
+    public function getGraficodeGenero($data, $fileName, $titulo){
+        $years = $data['years'];
+        $female = $data['female'];
+        $male = $data['male'];
+        $unspecified = $data['unspecified'];
+
+// Crear el gráfico
+        $graph = new Graph(800, 600);
+        $graph->SetScale('textlin');
+
+// Configurar títulos
+        $graph->title->Set('Número de personas sumadas por año');
+        $graph->xaxis->title->Set('Año');
+        $graph->yaxis->title->Set('Cantidad de personas');
+        $graph->xaxis->SetTickLabels($years);
+
+// Crear las líneas
+        $femalePlot = new LinePlot($female);
+        $femalePlot->SetLegend('Femenino');
+        $femalePlot->SetColor('pink');
+
+        $malePlot = new LinePlot($male);
+        $malePlot->SetLegend('Masculino');
+        $malePlot->SetColor('blue');
+
+        $unspecifiedPlot = new LinePlot($unspecified);
+        $unspecifiedPlot->SetLegend('Sin especificar');
+        $unspecifiedPlot->SetColor('gray');
+
+// Agregar las líneas al gráfico
+        $graph->Add($femalePlot);
+        $graph->Add($malePlot);
+        $graph->Add($unspecifiedPlot);
+
+// Mostrar la leyenda
+        $graph->legend->SetFrameWeight(1);
+        $graph->legend->SetColumns(1);
+        $graph->legend->SetPos(0.5,0.98,'center','bottom');
+
+// Mostrar el gráfico
+        $nombreImg = 'public/graficos/' . $fileName;
+        $this->getImagenGrafico($graph, $nombreImg);
+    }
+
     public function getGraph()
     {
         $graph = new Graph(350, 200, 'auto');

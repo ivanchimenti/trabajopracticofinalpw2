@@ -31,7 +31,7 @@ class AdminController
         $data['edad'] = $this->model->cantidadDeUsuariosPorEdad($filtro);
 
         $this->graficosCreator->getGraficoBarra($data['jugador'], 'cantidadJugadores.png', 'Cantidad de Jugadores');
-        $this->graficosCreator->getGraficoLinea($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
+        $this->graficosCreator->getGraficodeGenero($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
         $this->graficosCreator->getGraficoBarra($data['partidas'], 'cantidadPartidas.png', 'Cantidad de Partidas Jugadas');
         $this->graficosCreator->getGraficoBarraDoble($data['preguntas'], 'cantidadPreguntas.png', 'Preguntas Activas y Totales');
         $this->graficosCreator->getGraficoBarra($data['porcentajeCorrecto'], 'porcentajeCorrecto.png', 'Porcentaje de respuestas correctas');
