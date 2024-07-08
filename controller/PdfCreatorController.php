@@ -13,9 +13,28 @@ class PdfCreatorController
 
     public function create()
     {
-        if (isset($_GET['data'])) {
-            $base64 = $this->generateBase64Image($_GET['data']);
-            $html = $this->presenter->generateHtml("view/pdftemplates/pruebaView.mustache", ["base64Image" => $base64], true); // Render for PDF
+        if (isset($_GET['imagen']) && isset($_GET['filtro'])) {
+            $base64 = $this->generateBase64Image($_GET['imagen']);
+            $fecha = date("d/m/Y");
+
+            switch ($_GET['filtro']) {
+                case 'Year':
+                    $template = "view/pdftemplates/reporteYearView.mustache";
+                    break;
+                case 'Month':
+                    $template = "view/pdftemplates/reporteMonthView.mustache";
+                    break;
+                case 'Week':
+                    $template = "view/pdftemplates/reporteWeekView.mustache";
+                    break;
+                case 'Day':
+                    $template = "view/pdftemplates/reporteDayView.mustache";
+                    break;
+                default:
+                    $template = "view/pdftemplates/pruebaView.mustache";
+                    break;
+            }
+            $html = $this->presenter->generateHtml($template, ["base64Image" => $base64, "fecha" => $fecha], true); // Render for PDF
             $this->pdfCreator->create($html);
         } else {
             echo "Parámetro 'data' no encontrado.";

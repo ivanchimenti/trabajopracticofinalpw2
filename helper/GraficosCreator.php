@@ -8,7 +8,7 @@ class GraficosCreator
     public function create($datay1)
     {
 
-        $graph = new Graph(300, 250);
+        $graph = new Graph(350, 250);
         $graph->SetScale("textlin");
 
         $p1 = new LinePlot($datay1);
@@ -23,6 +23,7 @@ class GraficosCreator
     {
         $data1y = array();
         $dataName = array();
+        $total = 0;
 
 
         foreach ($data as $row) {
@@ -64,6 +65,79 @@ class GraficosCreator
 
         $b1plot = $this->getBarPlot($data1y);
         $graph->Add($b1plot);
+
+        $graph->title->Set($title);
+        $nombreImg = 'public/graficos/' . $filename;
+        $img = $this->getImagenGrafico($graph, $nombreImg);
+    }
+
+    public function getGraficoBarraMultiple($data, $filename, $title)
+    {
+        $data1y=$data['female'];
+        $data2y=$data['male'];
+        $data3y=$data['unspecified'];
+
+        $graph = new Graph(350,250,'auto');
+        $graph->SetScale("textlin");
+
+        $theme_class=new UniversalTheme;
+        $graph->SetTheme($theme_class);
+
+        $graph->SetBox(false);
+
+        $graph->ygrid->SetFill(false);
+        $graph->xaxis->SetTickLabels($data['filtro']);
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false,false);
+
+        $b1plot = new BarPlot($data1y);
+        $b2plot = new BarPlot($data2y);
+        $b3plot = new BarPlot($data3y);
+
+        $gbplot = new GroupBarPlot(array($b1plot,$b2plot,$b3plot));
+        $graph->Add($gbplot);
+
+        $b1plot->SetColor("white");
+        $b1plot->SetFillColor("#cc1111");
+
+        $b2plot->SetColor("white");
+        $b2plot->SetFillColor("#11cccc");
+
+        $b3plot->SetColor("white");
+        $b3plot->SetFillColor("#1111cc");
+
+        $graph->title->Set($title);
+        $nombreImg = 'public/graficos/' . $filename;
+        $img = $this->getImagenGrafico($graph, $nombreImg);
+    }
+
+    public function getGraficoBarraAciertos($data, $filename, $title)
+    {
+
+        $data1y = array();
+        $data2y= array();
+        $dataName = array();
+
+        for ($i = 0; $i < count($data); $i++) {
+            $data1y[] = $data[$i]["cantidad"];
+            $data2y[]=$data[$i]["erradas"];
+            $dataName[] = $data[$i]["filtro"];
+        }
+
+        $graph = $this->getGraph();
+        $this->getConfigGraph($graph, $dataName);
+
+        $b1plot = $this->getBarPlot($data1y);
+        $graph->Add($b1plot);
+
+        $b1plot = new BarPlot($data1y);
+        $b2plot = new BarPlot($data2y);
+
+        $gbplot = new GroupBarPlot(array($b1plot,$b2plot));
+        $graph->Add($gbplot);
+
+        $b1plot->SetFillColor("#0000FF");
+        $b2plot->SetFillColor("#FF0000");
 
         $graph->title->Set($title);
         $nombreImg = 'public/graficos/' . $filename;
@@ -140,7 +214,7 @@ class GraficosCreator
         $dataName = array_unique($dataName);
         $data1y = array_unique($data1y);
 
-        $graph = new Graph(300, 250);
+        $graph = new Graph(350, 250);
         $graph->SetScale("textlin");
 
         $theme_class = new UniversalTheme();
@@ -159,7 +233,6 @@ class GraficosCreator
 
         $graph->xgrid->Show();
         $graph->xgrid->SetLineStyle("solid");
-        var_dump($dataName);
         $graph->xaxis->SetTickLabels($dataName);
         $graph->xgrid->SetColor('#E3E3E3');
 
@@ -191,7 +264,7 @@ class GraficosCreator
     }
 
     public function getGraficodeGenero($data, $fileName, $titulo){
-        $years = $data['years'];
+        $years = $data['filtro'];
         $female = $data['female'];
         $male = $data['male'];
         $unspecified = $data['unspecified'];
@@ -209,15 +282,15 @@ class GraficosCreator
 // Crear las líneas
         $femalePlot = new LinePlot($female);
         $femalePlot->SetLegend('Femenino');
-        $femalePlot->SetColor('pink');
+        $femalePlot->SetColor("#FF1493");
 
         $malePlot = new LinePlot($male);
         $malePlot->SetLegend('Masculino');
-        $malePlot->SetColor('blue');
+        $malePlot->SetColor("#6495ED");
 
         $unspecifiedPlot = new LinePlot($unspecified);
         $unspecifiedPlot->SetLegend('Sin especificar');
-        $unspecifiedPlot->SetColor('gray');
+        $unspecifiedPlot->SetColor("#00FF00");
 
 // Agregar las líneas al gráfico
         $graph->Add($femalePlot);
@@ -236,7 +309,7 @@ class GraficosCreator
 
     public function getGraph()
     {
-        $graph = new Graph(350, 200, 'auto');
+        $graph = new Graph(350, 250, 'auto');
         $graph->SetScale("textlin");
         $theme_class = new UniversalTheme();
         $graph->SetTheme($theme_class);
@@ -249,6 +322,7 @@ class GraficosCreator
         $graph->SetBox(false);
         $graph->ygrid->SetFill(false);
         $graph->xaxis->SetTickLabels($dataName);
+        $graph->xaxis->SetLabelAngle(90);
         return $graph;
     }
 

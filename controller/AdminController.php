@@ -31,10 +31,13 @@ class AdminController
         $data['edad'] = $this->model->cantidadDeUsuariosPorEdad($filtro);
 
         $this->graficosCreator->getGraficoBarra($data['jugador'], 'cantidadJugadores.png', 'Cantidad de Jugadores');
-        $this->graficosCreator->getGraficodeGenero($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
+        if($filtro == 'Year')
+            $this->graficosCreator->getGraficodeGenero($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
+        else
+            $this->graficosCreator->getGraficoBarraMultiple($data['genero'], 'cantidadPorGenero.png', 'Jugadores por género');
         $this->graficosCreator->getGraficoBarra($data['partidas'], 'cantidadPartidas.png', 'Cantidad de Partidas Jugadas');
         $this->graficosCreator->getGraficoBarraDoble($data['preguntas'], 'cantidadPreguntas.png', 'Preguntas Activas y Totales');
-        $this->graficosCreator->getGraficoBarra($data['porcentajeCorrecto'], 'porcentajeCorrecto.png', 'Porcentaje de respuestas correctas');
+        $this->graficosCreator->getGraficoBarraAciertos($data['porcentajeCorrecto'], 'porcentajeCorrecto.png', 'Porcentaje de respuestas correctas');
         $this->graficosCreator->getGraficoPie($data['edad'], 'cantidadPorEdad.png', 'Cantidad de Jugadores por Edad');
 
         $data['jugador']['imagen_grafico'] = 'cantidadJugadores.png';
@@ -44,7 +47,7 @@ class AdminController
         $data['porcentajeCorrecto']['imagen_grafico'] = 'porcentajeCorrecto.png';
         $data['edad']['imagen_grafico'] = 'cantidadPorEdad.png';
 
-        $this->presenter->render("view/admin/adminView.mustache", ["data" => $data]);
+        $this->presenter->render("view/admin/adminView.mustache", ["data" => $data, "filtro" => $filtro]);
     }
 
 

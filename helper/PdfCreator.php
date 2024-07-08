@@ -17,6 +17,6 @@ class PdfCreator
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
-        $dompdf->stream("documentoNuevo.pdf", ['Attachment' => false]);
+        $dompdf->stream("reporte.pdf", ['Attachment' => true]);
     }
 }

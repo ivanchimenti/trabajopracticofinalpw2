@@ -228,7 +228,7 @@ class PartidaModel
     }
     public function addPartida($idUsuario, $idPregunta, $puntuacion)
     {
-        $query = $this->database->prepare("INSERT INTO partida (username, ult_pregunta,fecha, puntuacion, finalizada) VALUES (?,?,NOW(),?, 0);");
+        $query = $this->database->prepare("INSERT INTO partida (username, ult_pregunta,fecha_ingreso, puntuacion, finalizada) VALUES (?,?,NOW(),?, 0);");
         $query->bind_param("sii", $idUsuario, $idPregunta, $puntuacion);
         $query->execute();
         return $this->getPartidaActual($idUsuario);
