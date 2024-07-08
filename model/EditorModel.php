@@ -145,7 +145,7 @@ class EditorModel
     public function listReports()
     {
         $query = $this->database->prepare(
-            "SELECT DISTINCT reporte.id_pregunta, pregunta.contenido 
+            "SELECT DISTINCT reporte.id_pregunta, pregunta.contenido, reporte.id
         FROM reporte 
         JOIN pregunta ON reporte.id_pregunta = pregunta.id"
         );
@@ -174,5 +174,12 @@ class EditorModel
         }
 
         return $reports;
+    }
+
+    public function rejectReport($idReporte)
+    {
+        $query = $this->database->prepare("DELETE FROM Reporte WHERE id = ?");
+        $query->bind_param("i", $idReporte);
+        $query->execute();
     }
 }

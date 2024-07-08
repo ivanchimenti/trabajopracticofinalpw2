@@ -62,7 +62,7 @@ class EditorController
         $this->presenter->render("view/editor/manageQuestionView.mustache", $data);
     }
 
-    public function manageQuestion()
+    public function manageQuestion($suggestion = null)
     {
         $idPregunta = isset($_GET['id']) ? $_GET['id'] : null;
         $pregunta = $_POST['pregunta'];
@@ -72,6 +72,11 @@ class EditorController
 
         foreach ($respuestas as $index => &$respuesta) {
             $respuesta['correcta'] = ($index == $correctaIndex) ? 1 : 0;
+        }
+
+        if($suggestion == "suggestion") {
+            $this->model->addQuestion($categoria, $pregunta, $respuestas);
+            redirect('/editor');
         }
 
         if ($idPregunta) {
@@ -115,7 +120,15 @@ class EditorController
     public function acceptSuggestion()
     {
         $this->alterSuggestionState();
-        $this->manageQuestion();
+        $this->manageQuestion("suggestion");
+    }
+
+    public function rejectReport()
+    {
+        $idReporte = $_GET['id'];
+        $this->model->rejectReport($idReporte);
+
+        redirect('/editor/reportsView');
     }
 
     public function reportsView()

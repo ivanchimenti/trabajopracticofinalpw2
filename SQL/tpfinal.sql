@@ -385,7 +385,16 @@ INSERT INTO `respuesta` (`id`, `idPregunta`, `contenido`, `correcta`) VALUES
 (281, 60, 'William Shakespeare', 1),
 (282, 60, 'John Milton', 0),
 (283, 60, 'Geoffrey Chaucer', 0),
-(284, 60, 'Jane Austen', 0);
+(284, 60, 'Jane Austen', 0),
+(285, 61, 'Aconcagua', 0),
+(286, 61, 'Kilimanjaro', 0),
+(287, 61, 'Elbrus', 0),
+(288, 61, 'Denali', 1),
+(289, 62, 'Marco Polo', 0),
+(290, 62, 'Fernando de Magallanes', 0),
+(291, 62, 'Hernán Cortés', 0),
+(292, 62, 'Cristóbal Colón', 1);
+
 
 CREATE TABLE pregunta_respondida (
                                      id INT PRIMARY KEY auto_increment,
