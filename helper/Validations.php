@@ -9,6 +9,16 @@ function validateSession($controller, $action)
         redirect("/user/lobby");
     }
 
+    if($controller == "user" &&  $action == "lobby" && !isset($_SESSION['user'])) {
+        redirect("/");
+    }
+
+    if($controller == "user" &&  $action == "lobby" && isset($_SESSION['user'])) {
+        if($_SESSION['user']['role'] != "u") {
+            redirect("/user/errorView/error=403");
+        }
+    }
+
     if($controller == "partida" && ($action == "" || $action == "get") && isset($_SESSION['user'])) {
         if($_SESSION['user']['role'] != "u") {
             redirect("%user/errorView/error=403");
