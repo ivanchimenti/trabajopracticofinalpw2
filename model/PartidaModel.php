@@ -38,7 +38,7 @@ class PartidaModel
         }
 
         if ($pregunta !== null) {
-            $this->updatePreguntaRank($idPregunta);
+            $this->updatePreguntaRank($pregunta['id']);
             $this->addToPreguntaMostrada($pregunta['id']);
         }
 
