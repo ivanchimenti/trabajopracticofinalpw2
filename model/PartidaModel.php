@@ -38,6 +38,7 @@ class PartidaModel
         }
 
         if ($pregunta !== null) {
+            $this->updatePreguntaRank($idPregunta);
             $this->addToPreguntaMostrada($pregunta['id']);
         }
 
@@ -160,8 +161,8 @@ class PartidaModel
         $query->bind_param("isi", $idPregunta, $idUsuario, $acierto);
 
         $this->addToPreguntaCantRespondida($idPregunta);
-        $this->updatePreguntaRank($idPregunta);
         $this->addToUserCantRespondida($idUsuario);
+        $this->updatePreguntaRank($idPregunta);
 
         return $query->execute();
     }
